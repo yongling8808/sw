@@ -22,7 +22,8 @@ self.addEventListener('install', function(event) {
   console.log("sw install");
   
   var urlsToPrefetch = [
-    'images/img.jpg'
+    'images/img.jpg',
+	'index.html'
   ];
 
   console.log('Handling install event. Resources to pre-fetch:', urlsToPrefetch);

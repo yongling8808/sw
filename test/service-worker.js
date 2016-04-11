@@ -25,7 +25,7 @@ self.addEventListener('install', function(event) {
     'images/img.jpg',
 	'index.html'
   ];
-
+ 
   console.log('Handling install event. Resources to pre-fetch:', urlsToPrefetch);
 
   event.waitUntil(

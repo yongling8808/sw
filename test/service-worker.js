@@ -80,7 +80,7 @@ self.addEventListener('install', function(event) {
 
 
 
-self.addEventListener('fetch', function(event) {
+/*self.addEventListener('fetch', function(event) {
 
     console.log('fetch event for ' + event.request.url);
  
@@ -93,6 +93,18 @@ self.addEventListener('fetch', function(event) {
           return cache.match(OFFLINE_URL);
         });
       })
+    );
+ 
+});*/
+
+
+self.addEventListener('fetch', function(event) {
+
+    event.respondWith(
+        caches.open(OFFLINE_CACHE).then(function(cache) {
+          console.log('load from cache:'+ event.request.url);
+          return cache.match(event.request.url);
+        })
     );
  
 });

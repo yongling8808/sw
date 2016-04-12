@@ -1,7 +1,7 @@
 
 'use strict';
 
-  
+   
 var OFFLINE_CACHE = 'offline';
 var OFFLINE_URL = 'offline.html';
 

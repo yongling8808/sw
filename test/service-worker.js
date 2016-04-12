@@ -101,7 +101,7 @@ self.addEventListener('install', function(event) {
 self.addEventListener('fetch', function(event) {
 
     event.respondWith(
-        caches.open(OFFLINE_CACHE).then(function(cache) {
+        caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
           console.log('load from cache:'+ event.request.url);
           return cache.match(event.request.url);
         })

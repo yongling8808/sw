@@ -30,10 +30,16 @@ if(serviceWorker.installing) {
 window.addEventListener('message', function(event) {
 	if(event.data == "serviceworker-update")
 	{
-		setTimeout("alert('')", 1 );
+		setTimeout("notify()", 100 );
 		return;
 	}
 });
+
+function notify()
+{
+	alert("page have updated!");
+}
+	
 
 
 
@@ -54,7 +60,7 @@ window.addEventListener('message', function(event) {
 <button onclick="test()">Out Js Test!</button>
 </br>
 </br>
-<h3>timestamp:2016.0413.145300</h3>
+<h3>timestamp:2016.0413.145600</h3>
 
 </body>
 

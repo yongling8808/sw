@@ -15,7 +15,7 @@ event.waitUntil(
   );
                
 });
-
+ 
 
 this.addEventListener('activate', function(event) {
     console.log('serviceworker activate');

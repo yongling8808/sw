@@ -5,7 +5,7 @@ const OFFLINE_CACHE = 'v5';
 this.addEventListener('install', function(event) {
 
 event.waitUntil(
-    caches.open('v1').then(function(cache) {
+    caches.open(OFFLINE_CACHE).then(function(cache) {
       return cache.addAll([
         '/sw/sw/index.html',
         '/sw/sw/snowTroopers.jpg',

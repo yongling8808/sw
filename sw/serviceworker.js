@@ -5,7 +5,7 @@ this.addEventListener('install', function(event) {
 
 console.log('serviceworker thread oninstall function');
 
-const offlineRequest = new Request('/0029526/serviceworker/index.html');
+const offlineRequest = new Request('index.html');
 console.log('serviceworker thread oninstall function01');
   // event.waitUntil(
     fetch(offlineRequest).then(function(response) {
@@ -17,14 +17,14 @@ console.log('serviceworker thread oninstall function01');
     });
   // );
 
-const ImageRequest = new Request('/0029526/serviceworker/snowTroopers.jpg');
+const ImageRequest = new Request('snowTroopers.jpg');
 fetch(ImageRequest).then(function(response) {
   return caches.open(OFFLINE_CACHE).then(function(cache) {
     return cache.put(ImageRequest, response);
   });
 });
 
-const JsRequest = new Request('/0029526/serviceworker/app.js');
+const JsRequest = new Request('app.js');
 fetch(JsRequest).then(function(response) {
   return caches.open(OFFLINE_CACHE).then(function(cache) {
     return cache.put(JsRequest, response);

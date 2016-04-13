@@ -1,5 +1,5 @@
 importScripts('serviceworker-cache-polyfill.js');
-
+ 
 const OFFLINE_CACHE = 'v5';
 
 this.addEventListener('install', function(event) {

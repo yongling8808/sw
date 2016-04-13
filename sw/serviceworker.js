@@ -32,7 +32,7 @@ this.addEventListener('fetch', function(event)  {
   //     });
   // });  
 
-
+ 
   console.log('serviceworker thread onfetch function');
   console.log('this comes frome server!');
   console.log('Handling fetch event for '+ event.request.url);

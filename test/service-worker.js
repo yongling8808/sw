@@ -15,8 +15,6 @@ self.addEventListener('activate', function(e) {
   console.log('Activate event:' + e);
 });
 
-
-
 self.addEventListener('install', function(event) {
   
   console.log("sw install");

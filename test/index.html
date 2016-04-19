@@ -27,7 +27,6 @@
 		console.log("start register");
         navigator.serviceWorker.register('service-worker.js', {scope: '/sw/test/'}).then(function(r) {
 		     console.log("register done");
-		     alert('serviceWorker registered:' + r);
 		});
       }
  

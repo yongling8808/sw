@@ -1,6 +1,4 @@
-
-'use strict';
-
+importScripts('serviceworker-cache-polyfill.js');
         
 var OFFLINE_CACHE = 'offline';
 var OFFLINE_URL = 'offline.html';
@@ -15,9 +13,20 @@ self.addEventListener('activate', function(e) {
   console.log('Activate event:' + e);
 });
 
+this.addEventListener('install', function(event) {
 
+event.waitUntil(
+    caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
+      return cache.addAll([
+        '/sw/test/images/img.jpg',
+        '/sw/test/index.html',
+      ]);
+    })
+  );
+          
+});
 
-self.addEventListener('install', function(event) {
+/*self.addEventListener('install', function(event) {
   
   console.log("sw install");
   
@@ -62,7 +71,7 @@ self.addEventListener('install', function(event) {
     })
   );
 });
-
+*/
 /*self.addEventListener('fetch', function(event) {
 
   console.log('fetch event for ' + event.request.url);

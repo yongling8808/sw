@@ -13,8 +13,43 @@
   <link rel="stylesheet" href="css/ps.css?t=20150411">
   <script src="js/underscore.min.js"></script>
   <script src="js/zepto.min-1.1.4.js"></script>
+  
+  <script>
+
+function register() {
+
+console.log('serviceworker install...');
+
+  navigator.serviceWorker.register('serviceworker.js').then( function(serviceWorker) {
+
+if(serviceWorker.installing) {
+      console.log('Service worker installing');
+    } else if(serviceWorker.waiting) {
+      console.log('Service worker installed');
+    } else if(serviceWorker.active) {
+      console.log('Service worker active');
+    }
+    console.log(serviceWorker);
+
+// To use the serviceWorker immediately,
+
+// you might call window.location.reload()
+ 
+});
+}
+
+window.addEventListener('message', function(event) {
+	if(event.data == "serviceworker-update")
+	{
+		alert("game have updated! you can reload!");
+		return;
+	}
+});
+
+</script>
+
 </head>
-<body>
+<body onload="register()">
   
   <div class="wrap" id="J_wrap">
     

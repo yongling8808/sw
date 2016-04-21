@@ -1,8 +1,3 @@
----
-feature_name: NotificationOptions.vibrate
-chrome_version: 45
-feature_id: 5727996321202176
----
 
 <p>When displaying a system notification your device may vibrate to alert the user. You can specify the vibration pattern that should be used in the same way as for the <a href="../vibration/index.html">Vibration API</a>.</p>
 
@@ -10,7 +5,6 @@ feature_id: 5727996321202176
 
 <p>Chrome for Android only supports showing persistant notifications, which are associated with a service worker to handle the click event. We must first register a worker, and create the notification using the showNotification method of the registration object.</p>
 
-{% capture js %}
 <script>
 navigator.serviceWorker.register('sw.js');
 
@@ -29,7 +23,5 @@ function showNotification() {
   });
 }
 </script>
-{% endcapture %}
 
-{% include js_snippet.html js=js %}
 <div><button onclick="showNotification()">Show notification</button></div>

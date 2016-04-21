@@ -203,12 +203,14 @@ function setHardType(type){
 
 function show(elem){
   elem = typeof elem === "string" ? document.getElementById(elem) : elem;
-  elem.style.display = "block";
+  if(elem != null)
+  	elem.style.display = "block";
 }
 
 function hide(elem){
   elem = typeof elem === "string" ? document.getElementById(elem) : elem;
-  elem.style.display = "none";
+  if(elem != null)
+  	elem.style.display = "none";
 }
 
 function domReady(func){

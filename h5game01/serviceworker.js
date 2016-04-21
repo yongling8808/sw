@@ -7,17 +7,17 @@ this.addEventListener('install', function(event) {
 event.waitUntil(
     caches.open(OFFLINE_CACHE).then(function(cache) {
       return cache.addAll([
-        'index.html',
-        'css/base.css',
-        'css/ps.css',
-        'css/reset.css',
-        'img/screen.png',
-        'js/base.js',
-        'js/circle.js',
-        'js/core.js',
-        'js/stick.js',
-        'js/underscore.min.js',
-        'js/zepto.min-1.1.4.js',
+        'sw/h5game01/index.html',
+        'sw/h5game01/css/base.css',
+        'sw/h5game01/css/ps.css',
+        'sw/h5game01/css/reset.css',
+        'sw/h5game01/img/screen.png',
+        'sw/h5game01/js/base.js',
+        'sw/h5game01/js/circle.js',
+        'sw/h5game01/js/core.js',
+        'sw/h5game01/js/stick.js',
+        'sw/h5game01/js/underscore.min.js',
+        'sw/h5game01/js/zepto.min-1.1.4.js',
       ]);
     })
   );

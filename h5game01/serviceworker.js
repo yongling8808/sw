@@ -37,8 +37,7 @@ this.addEventListener('fetch', function(event)  {
   console.log('Handling fetch event for '+ event.request.url);
   
   var n=event.request.url.indexOf("?");
-  var url = url.substring(0,n);
-  
+  var url = event.request.url.substring(0,n);
   event.respondWith(
         caches.open(OFFLINE_CACHE).then(function(cache) {
           console.log('load from cache:'+ url);

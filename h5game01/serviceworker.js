@@ -35,10 +35,14 @@ this.addEventListener('fetch', function(event)  {
   console.log('serviceworker thread onfetch function');
   console.log('this comes frome server!');
   console.log('Handling fetch event for '+ event.request.url);
+  
+  var n=event.request.url.indexOf("?");
+  var url = url.substr(0,n);
+  
   event.respondWith(
         caches.open(OFFLINE_CACHE).then(function(cache) {
-          console.log('load from cache:'+ event.request.url);
-          return cache.match(event.request.url);
+          console.log('load from cache:'+ url);
+          return cache.match(url);
         })
     ); 
   console.log('Handling fetch event end!');

@@ -6,20 +6,18 @@ this.addEventListener('install', function(event) {
 //     caches.open(OFFLINE_CACHE).then(function(cache) {
 //       return cache.addAll([
 //         '/sw/sw/index.html',
-//         '/sw/sw/snowTroopers.jpg',
 //         '/sw/sw/app.js',
 //       ]);
 //     })
 //   );
 
-	var req1,req2,req3;
+	var req1,req2;
 	req1 = new Request('/sw/upgrade/cache/index.html');
-	req2 = new Request('/sw/upgrade/cache/sw/snowTroopers.jpg');
-	req3 = new Request('/sw/upgrade/cache/sw/app.js');
+	req2 = new Request('/sw/upgrade/cache/sw/app.js');
 	event.waitUntil(
     caches.open(OFFLINE_CACHE).then(function(cache) {
       return cache.addAll([
-        req1,req2,req3,
+        req1,req2,
       ]);
     })
   );

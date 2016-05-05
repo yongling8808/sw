@@ -13,7 +13,7 @@ this.addEventListener('install', function(event) {
 
 	var req1,req2;
 	req1 = new Request('/sw/upgrade/cache/index.html');
-	req2 = new Request('/sw/upgrade/cache/sw/app.js');
+	req2 = new Request('/sw/upgrade/cache/app.js');
 	event.waitUntil(
     caches.open(OFFLINE_CACHE).then(function(cache) {
       return cache.addAll([
@@ -40,14 +40,14 @@ this.addEventListener('fetch', function(event)  {
   //     });
   // });  
 
-//   caches.open(OFFLINE_CACHE).then(function(cache) {
-//   cache.matchAll().then(function(response) {
-//   	console.log(response);
-//     response.forEach(function(element, index, array) {
-//       console.log(element.url);
-//     });
-//   });
-// });
+  caches.open(OFFLINE_CACHE).then(function(cache) {
+  cache.matchAll().then(function(response) {
+  	console.log(response);
+    response.forEach(function(element, index, array) {
+      console.log(element.url);
+    });
+  });
+});
 
  
   console.log('serviceworker thread onfetch function');

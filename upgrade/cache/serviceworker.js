@@ -40,6 +40,14 @@ this.addEventListener('fetch', function(event)  {
   //     });
   // });  
 
+  caches.open(OFFLINE_CACHE).then(function(cache) {
+  cache.matchAll().then(function(response) {
+    response.forEach(function(element, index, array) {
+      console.log(element.url);
+    });
+  });
+})
+
  
   console.log('serviceworker thread onfetch function');
   console.log('this comes frome server!');

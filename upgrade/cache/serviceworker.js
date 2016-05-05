@@ -42,11 +42,12 @@ this.addEventListener('fetch', function(event)  {
 
   caches.open(OFFLINE_CACHE).then(function(cache) {
   cache.matchAll().then(function(response) {
+  	console.log(response);
     response.forEach(function(element, index, array) {
       console.log(element.url);
     });
   });
-})
+});
 
  
   console.log('serviceworker thread onfetch function');

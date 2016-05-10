@@ -41,9 +41,9 @@ this.addEventListener('fetch', function(event)  {
   // });  
 
   caches.open(OFFLINE_CACHE).then(function(cache) {
-  cache.matchAll().then(function(response) {
-  	console.log(response);
-    response.forEach(function(element, index, array) {
+  cache.keys().then(function(request) {
+  	console.log(request);
+    request.forEach(function(element, index, array) {
       console.log(element.url);
     });
   });

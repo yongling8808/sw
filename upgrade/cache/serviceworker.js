@@ -40,14 +40,14 @@ this.addEventListener('fetch', function(event)  {
   //     });
   // });  
 
-  caches.open(OFFLINE_CACHE).then(function(cache) {
-  cache.keys().then(function(request) {
-  	console.log(request);
-    request.forEach(function(element, index, array) {
-      console.log(element.url);
-    });
-  });
-});
+//   caches.open(OFFLINE_CACHE).then(function(cache) {
+//   cache.keys().then(function(request) {
+//   	console.log(request);
+//     request.forEach(function(element, index, array) {
+//       console.log(element.url);
+//     });
+//   });
+// });
 
  
   console.log('serviceworker thread onfetch function');

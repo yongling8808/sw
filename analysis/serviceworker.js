@@ -123,17 +123,27 @@ this.addEventListener('fetch', function(event)  {
   // });  
 
  
-  console.log('serviceworker thread onfetch function');
-  console.log('this comes frome server!');
-  console.log('Handling fetch event for '+ event.request.url);
+  // console.log('serviceworker thread onfetch function');
+  // console.log('this comes frome server!');
+  // console.log('Handling fetch event for '+ event.request.url);
+  // event.respondWith(
+  //       caches.open(OFFLINE_CACHE).then(function(cache) {
+  //         console.log('load from cache:'+ event.request.url);
+  //         return cache.match(event.request.url);
+  //       })
+  //   ); 
+
   event.respondWith(
         caches.open(OFFLINE_CACHE).then(function(cache) {
           console.log('load from cache:'+ event.request.url);
-          return cache.match(event.request.url);
-        }).catch(function() {
-            var req = new Request('/sw/analysis/snowTroopers.jpg');
+          return cache.match(event.request.url).then(function(resp) {
+            return resp;
+          }).catch(function() {
+            var request = new Request(event.request.url);
             return fetch(request.clone());
+          });
         })
     ); 
+
   console.log('Handling fetch event end!');
 }); 

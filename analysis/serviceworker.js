@@ -140,7 +140,7 @@ this.addEventListener('fetch', function(event)  {
             if(resp) {
               return resp;
             }
-            return fetch(revent.request);
+            return fetch(event.request);
           })
         })
     ); 

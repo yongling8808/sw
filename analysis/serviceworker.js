@@ -130,9 +130,13 @@ this.addEventListener('fetch', function(event)  {
         caches.open(OFFLINE_CACHE).then(function(cache) {
           console.log('load from cache:'+ event.request.url);
           return cache.match(event.request.url);
-        }).catch(function(error) {
+        }).catch(function() {
             var req = new Request('/sw/analysis/snowTroopers.jpg');
-            return fetch(request.clone());
+            return fetch(request.clone()).then(function(resp) {
+  
+                return resp;
+  
+          })
         })
     ); 
   console.log('Handling fetch event end!');

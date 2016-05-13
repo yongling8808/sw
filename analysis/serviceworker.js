@@ -135,10 +135,11 @@ this.addEventListener('fetch', function(event)  {
 
   event.respondWith(
         caches.open(OFFLINE_CACHE).then(function(cache) {
-          console.log('load from cache:'+ event.request.url);
+          console.log('fetch:'+ event.request.url);
           return cache.match(event.request.url).then(function(resp) {
             return resp;
           }).catch(function() {
+            console.log('load from net:'+ event.request.url);
             var request = new Request(event.request.url);
             return fetch(request.clone());
           });

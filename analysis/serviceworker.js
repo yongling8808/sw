@@ -132,11 +132,7 @@ this.addEventListener('fetch', function(event)  {
           return cache.match(event.request.url);
         }).catch(function() {
             var req = new Request('/sw/analysis/snowTroopers.jpg');
-            return fetch(request.clone()).then(function(resp) {
-  
-                return resp;
-  
-          })
+            return fetch(request.clone());
         })
     ); 
   console.log('Handling fetch event end!');

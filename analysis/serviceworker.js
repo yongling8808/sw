@@ -137,12 +137,11 @@ this.addEventListener('fetch', function(event)  {
         caches.open(OFFLINE_CACHE).then(function(cache) {
           console.log('fetch:'+ event.request.url);
           return cache.match(event.request.url).then(function(resp) {
-            return resp;
-          }).catch(function() {
-            console.log('load from net:'+ event.request.url);
-            var request = new Request(event.request.url);
-            return fetch(request.clone());
-          });
+            if(resp) {
+              return resp;
+            }
+            return fetch(revent.request);
+          })
         })
     ); 
 

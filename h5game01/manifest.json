@@ -5,7 +5,7 @@
         "src": "img/icon.png",
         "sizes": "192x192"
       }],
-  "start_url": "./index.html?homescreen=1",
+  "start_url": "./index.html",
   "display": "standalone",
   "gcm_sender_id": "321923774908",
   

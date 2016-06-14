@@ -8,8 +8,11 @@ navigator.serviceWorker.register('sw.js');
 
 function showNotifications() {
   Notification.requestPermission(function(result) {
+  	console.log("Notification.requestPermission:"+result);
     if (result === 'granted') {
+    	console.log("Notification.requestPermission1");
       navigator.serviceWorker.ready.then(function(registration) {
+      	console.log("registration will showNotification");
         registration.showNotification('requireInteraction: true', {
           body: 'Requires interaction',
           icon: 'chrome-touch-icon-192x192.png',

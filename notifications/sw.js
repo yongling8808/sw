@@ -15,7 +15,6 @@ self.addEventListener('notificationclick', function(event) {
 
 //Utility function to handle the click
 function handleNotificationClick(evt) {
-    if (_roostSW.logging) console.log("Notification clicked: ", evt.notification);
     evt.notification.close();
     var iconURL = evt.notification.icon;
     if (iconURL.indexOf("?") > -1) {

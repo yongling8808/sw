@@ -25,6 +25,6 @@ function handleNotificationClick(evt) {
 //            return clients.openWindow(query.url[0]);
 //        }
 //    }
-clients.openWindow('https://yongling8808.github.io/sw/notifications/requireInteraction.html');
+//clients.openWindow('https://yongling8808.github.io/sw/notifications/requireInteraction.html');
     console.log("Failed to redirect to notification for iconURL: " + iconURL);
 }

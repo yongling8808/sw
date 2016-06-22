@@ -15,7 +15,9 @@ self.addEventListener('notificationclick', function(event) {
 
 //Utility function to handle the click
 function handleNotificationClick(evt) {
+	console.log("sw thread notificationclick");
     evt.notification.close();
+    console.log("sw thread evt.notification.close");
 //    var iconURL = evt.notification.icon;
 //    if (iconURL.indexOf("?") > -1) {
 //        var queryString = iconURL.split("?")[1];
@@ -26,5 +28,6 @@ function handleNotificationClick(evt) {
 //        }
 //    }
 clients.openWindow('https://yongling8808.github.io/sw/notifications/requireInteraction.html');
-    console.log("Failed to redirect to notification for iconURL: " + iconURL);
+console.log("sw thread clients.openWindow");
+    //console.log("Failed to redirect to notification for iconURL: " + iconURL);
 }

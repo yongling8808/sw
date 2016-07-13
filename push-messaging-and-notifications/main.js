@@ -183,6 +183,7 @@ function initialiseState() {
         if (!subscription) {
           // We aren’t subscribed to push, so set UI
           // to allow the user to enable push
+          console.log('subscription is null!');
           return;
         }
 

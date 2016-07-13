@@ -5,6 +5,7 @@
 
 <script>
 
+function register() {
 var myImage = document.getElementById("img");
 
 fetch('snowTroopers.jpg')
@@ -16,13 +17,13 @@ fetch('snowTroopers.jpg')
   myImage.src = objectURL;
 });
 
-
+}
 </script>
 </head>
 
-<body>
-<h1>ServiceWork Test!</h1>
-<button onclick="register()">Register</button>
+<body onload="loadimg()">
+<h1>Window fetch Test!</h1>
+<h3>If window.fetch OK! a picture will show bel</h3>
 </br>
 </br>
 </br>

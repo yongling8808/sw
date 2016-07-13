@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+
+<head>
+
+<script>
+
+var myImage = document.querySelector('img');
+
+fetch('snowTroopers.jpg')
+.then(function(response) {
+  return response.blob();
+})
+.then(function(myBlob) {
+  var objectURL = URL.createObjectURL(myBlob);
+  myImage.src = objectURL;
+});
+
+
+</script>
+<script src="app.js" type="text/javascript"></script>
+</head>
+
+<body>
+<h1>ServiceWork Test!</h1>
+<button onclick="register()">Register</button>
+</br>
+</br>
+</br>
+<image id="img"></image>
+</br>
+</br>
+</br>
+<button onclick="test()">Out Js Test!</button>
+</br>
+</br>
+
+</body>
+
+</html>

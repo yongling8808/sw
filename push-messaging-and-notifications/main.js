@@ -93,6 +93,7 @@ function unsubscribe() {
           pushButton.disabled = false;
           pushButton.textContent = 'Enable Push Messages';
           isPushEnabled = false;
+          console.log('unsubscribe success!');
         }).catch(function(e) {
           // We failed to unsubscribe, this can lead to
           // an unusual state, so may be best to remove

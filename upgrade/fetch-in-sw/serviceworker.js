@@ -15,5 +15,5 @@ this.addEventListener('fetch', function(event)  {
 event.respondWith(
     return fetch(event.request).then(function(resp) {
       return resp;
-  }
-); 
+  });
+}); 

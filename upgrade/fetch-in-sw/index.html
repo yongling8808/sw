@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+
+<head>
+
+<script>
+
+function register() {
+
+console.log('serviceworker install...');
+
+  navigator.serviceWorker.register('serviceworker.js').then( function(serviceWorker) {
+
+if(serviceWorker.installing) {
+      console.log('Service worker installing');
+    } else if(serviceWorker.waiting) {
+      console.log('Service worker installed');
+    } else if(serviceWorker.active) {
+      console.log('Service worker active');
+    }
+    console.log(serviceWorker);
+
+// To use the serviceWorker immediately,
+
+// you might call window.location.reload()
+ 
+});
+}
+
+// window.addEventListener('message', function(event) {
+// 	if(event.data == "serviceworker-update")
+// 	{
+// 		alert("page have updated!");
+// 		return;
+// 	}
+// });
+
+</script>
+</head>
+
+<h1>ServiceWork Fetch Test!</h1>
+<h3>Refresh the page many times! If ServiceWork.fetch is OK, a picture will show below!</h3>
+</br>
+</br>
+</br>
+<image src="download.jpg"></image>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+</body>
+
+</html>

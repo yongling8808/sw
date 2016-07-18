@@ -16,4 +16,4 @@ event.respondWith(
     return fetch(event.request).then(function(resp) {
       return resp;
   }
-}); 
+); 

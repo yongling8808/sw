@@ -16,15 +16,15 @@
 // clients.claim() call as part of the promise chain that is passed to waitUntil() in your
 // existing event listeners.
 
-if (typeof self.skipWaiting === 'function') {
-  console.log('self.skipWaiting() is supported.');
+//if (typeof self.skipWaiting === 'function') {
+//  console.log('self.skipWaiting() is supported.');
   self.addEventListener('install', function(e) {
     // See https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#service-worker-global-scope-skipwaiting
     e.waitUntil(self.skipWaiting());
   });
-} else {
-  console.log('self.skipWaiting() is not supported.');
-}
+//} else {
+//  console.log('self.skipWaiting() is not supported.');
+//}
 
 if (self.clients && (typeof self.clients.claim === 'function')) {
   console.log('self.clients.claim() is supported.');

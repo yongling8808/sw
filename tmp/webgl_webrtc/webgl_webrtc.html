@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>krpano / HTML5 Video WebGL Performance Test</title>
+	<style>
+		body { font-family:Arial; font-size:10pt; }
+		h2 { margin-bottom:4pt; padding-bottom:0pt; }
+		ul { margin-top:0pt; margin-bottom:4pt; padding-left:20pt; }
+		ul li { padding:1pt 0; }
+		table { border-collapse: collapse; }
+		table, th, td { border: 1px solid #AAA; padding:2px 5px; }
+		td:last-child { text-align: right; }
+	</style>
+<script src="./WebGL - Textures - Texture Atlas_files/jquery-1.7.1.min.js"></script>
+<script src="./WebGL - Textures - Texture Atlas_files/jquery-ui-1.8.16.custom.min.js"></script>
+<script src="./WebGL - Textures - Texture Atlas_files/jquery.gman.ui.js"></script>
+<script src="./WebGL - Textures - Texture Atlas_files/webgl-utils.js"></script>
+<script src="./WebGL - Textures - Texture Atlas_files/webgl-lessons-helper.js"></script>
+<script src="./WebGL - Textures - Texture Atlas_files/webgl-3d-math.js"></script>
+<script id="3d-vertex-shader" type="x-shader/x-vertex">
+attribute vec4 a_position;
+attribute vec2 a_texcoord;
+
+uniform mat4 u_matrix;
+
+varying vec2 v_texcoord;
+
+void main() {
+  // Multiply the position by the matrix.
+  gl_Position = u_matrix * a_position;
+
+  // Pass the texcoord to the fragment shader.
+  v_texcoord = a_texcoord;
+}
+</script>
+<!-- fragment shader -->
+<script id="3d-fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+// Passed in from the vertex shader.
+varying vec2 v_texcoord;
+
+// The texture.
+uniform sampler2D u_texture;
+
+void main() {
+   gl_FragColor = texture2D(u_texture, v_texcoord);
+}
+</script>
+</head>
+<body>
+
+	<h2>HTML5 Video WebGL Performance Test</h2>
+
+	<div style="position:relative;width:900px;height:270px;margin-top:40px;">
+		<div id="fps" style="position:absolute;left:0px;top:-20px;width:400px;height:24px; overflow:hidden;font-family:courier;"></div>
+		<canvas id="canvas" width="500" height="250" style="position:absolute;left:0;top:0;border:1px solid #CCCCCC;"></canvas>
+		<pre id="log" style="position:absolute;left:510px;top:0;width:380px;height:250px;margin:0;border:1px solid #CCCCCC;overflow:auto;">Log:</pre>
+	</div>
+	
+	<canvas id="canvas2d" width="500" height="250" style="position:absolute;left:0;top:300;border:1px solid #CCCCCC;"></canvas>
+	<br>
+	<br>
+
+	<script>
+
+		function log(msg,style)
+		{
+			document.getElementById("log").innerHTML += "<br><span style='"+(style?style:"")+"'>"+msg+"</span>";
+		}
+		
+		var canvas = document.getElementById("canvas");
+		var canvas2d = document.getElementById("canvas2d");
+		var ctx = canvas2d.getContext('2d');
+		
+		setupLesson(canvas);
+		var gl = null;
+		for (var i=0; i<4; i++)
+		{
+			gl = canvas.getContext(["webgl","experimental-webgl","moz-webgl","webkit-3d"][i])
+			if (gl)
+				break;
+		}
+		
+		if (!gl)
+			log("No WebGL support!", "color:red;");
+
+		  gl.enable(gl.CULL_FACE);
+		  gl.enable(gl.DEPTH_TEST);
+
+		  // setup GLSL program
+		  var program = createProgramFromScripts(gl, ["3d-vertex-shader", "3d-fragment-shader"]);
+		  gl.useProgram(program);
+
+		  // look up where the vertex data needs to go.
+		  var positionLocation = gl.getAttribLocation(program, "a_position");
+		  var texcoordLocation = gl.getAttribLocation(program, "a_texcoord");
+
+		  // lookup uniforms
+		  var matrixLocation = gl.getUniformLocation(program, "u_matrix");
+
+		  // Create a buffer.
+		  var buffer = gl.createBuffer();
+		  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+		  gl.enableVertexAttribArray(positionLocation);
+		  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
+
+		  // Set Geometry.
+		  setGeometry(gl);
+
+		  // Create a buffer for texcoords.
+		  var buffer = gl.createBuffer();
+		  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+		  gl.enableVertexAttribArray(texcoordLocation);
+
+		  // We'll supply texcoords as floats.
+		  gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
+
+		  // Set Texcoords.
+		  setTexcoords(gl);
+
+		  // Create a texture.
+		  var texture = gl.createTexture();
+		  gl.bindTexture(gl.TEXTURE_2D, texture);
+		  // Fill the texture with a 1x1 blue pixel.
+		  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+						new Uint8Array([0, 0, 255, 255]));
+				
+		var image = new Image();
+		image.src = "resources/noodles.jpg";
+		image.addEventListener('load', function() {
+			// Now that the image has loaded make copy it to the texture.
+			gl.bindTexture(gl.TEXTURE_2D, texture);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, image);
+
+			// Check if the image is a power of 2 in both dimensions.
+			if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+			   // Yes, it's a power of 2. Generate mips.
+			   gl.generateMipmap(gl.TEXTURE_2D);
+			} else {
+			   // No, it's not a power of 2. Turn of mips and set wrapping to clamp to edge
+			   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+			   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+			   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+			}
+		  });
+
+			
+			var fieldOfViewRadians = degToRad(60);
+			var modelXRotationRadians = degToRad(0);
+			var modelYRotationRadians = degToRad(0);
+
+			// Get the starting time.
+			var then = 0;
+			
+		// load the video
+		var video = document.createElement("video");
+		var videoready = false;
+		video.autoplay = true;
+		video.loop = true;
+		video.oncanplay = function(){ videoready=true; };
+		video.onerror = function()
+		{
+			var err = "unknown error";
+			
+			switch(video.error.code)
+			{
+				case 1: err = "video loading aborted"; break;
+				case 2: err = "network loading error"; break;
+				case 3: err = "video decoding failed / corrupted data or unsupported codec"; break;
+				case 4: err = "video not supported"; break;
+			}; 
+			
+			log("Error: " + err + " (errorcode="+video.error.code+")", "color:red;");
+		};
+		//video.crossOrigin = "anonymous";
+		
+		//var video_path     = "";//http://d8d913s460fub.cloudfront.net/videoserver/";
+		//var video_filename = "marienplatz-1920x960-15fps-high.mp4";
+		
+		//if ( !video.canPlayType("video/mp4").match(/maybe|probably/i) && video.canPlayType("video/webm").match(/maybe|probably/i) )
+		//{
+		//	// try webm if mp4 isn't supported
+		//	video_filename = "marienplatz-1920x960-15fps-high.webm";
+		//}
+		
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+		if (navigator.getUserMedia){
+			navigator.getUserMedia({video:true},
+			function(stream){ return videoReady(stream); },
+			function(error){ return videoError(error); } );
+		}
+
+		// iOS - start video via touch
+		var needtouch = false;
+		var gottouch = false;
+		function iOS_video_touch_start()
+		{
+			gottouch = true;
+			log("got the touch, try playing");
+			
+			window.removeEventListener("touchstart", iOS_video_touch_start, true);
+			video.play();
+		}
+
+		var errcnt=0;
+		
+		var fpsdiv = document.getElementById("fps");
+		
+		var t1 = performance.now();
+		var t2 = t1;
+		var dt = 0;
+		var curfps = 60;
+		var avgfps = 0;
+		var frames = 0;
+
+		// requestAnimationFrame loop
+		function frameloop(time)
+		{
+			frames++;
+			
+			if (needtouch == false && gottouch == false)
+			{
+				if (video.paused)
+				{
+					needtouch = true;
+					log("Note - need a touch to start the video!", "color:green;");
+					window.addEventListener("touchstart", iOS_video_touch_start, true);
+				}
+				else
+				{
+					needtouch = false;
+					gottouch = true;
+				}
+			}
+
+			if (videoready && !video.paused)
+			{
+				try
+				{
+					// upload the video frame
+					gl.bindTexture(gl.TEXTURE_2D, texture);
+					ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+					gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,canvas2d);
+					drawScene(time);
+				}
+				catch(e)
+				{
+					// log only the first few errors
+					errcnt++;
+					if (errcnt < 10)
+						log(e, "color:red;");
+					else if (errcnt == 10)
+						log("...", "color:red;");
+				}
+			}
+			
+			if (videoready)
+			{
+				if ((frames & 7) == 0)
+				{
+					t1 = t2;
+					t2 = performance.now();
+					dt = (t2-t1) / 8.0;
+			
+					curfps = dt > 0 ? (1000.0 / dt) : 60;
+					avgfps = frames < 10 ? curfps : 0.5*avgfps + 0.5*curfps;
+				
+					fpsdiv.innerHTML = "FPS: " + avgfps.toFixed(avgfps < 10 ? 1 : 0)+" - Videosize: "+video.videoWidth+"x"+video.videoHeight;
+				}
+			}
+			
+			requestAnimationFrame(frameloop);
+		}
+		
+		videoReady = function(stream){
+		if (window.webkitURL) {
+			this.video.src = window.webkitURL.createObjectURL(stream);
+		} else if (video.mozSrcObject !== undefined) {
+			this.video.mozSrcObject = stream;
+		} else {
+			this.video.src = stream;
+		}
+			// try to disable the iPhone video fullscreen mode:
+			video.setAttribute("playsinline", "");
+			video.setAttribute("webkit-playsinline", "");
+
+			// try to start playing
+			video.play();
+			
+			requestAnimationFrame(frameloop);
+		};
+		
+		videoError = function(error){
+		};
+		
+		 function isPowerOf2(value) {
+    return (value & (value - 1)) == 0;
+  }
+
+  function radToDeg(r) {
+    return r * 180 / Math.PI;
+  }
+
+  function degToRad(d) {
+    return d * Math.PI / 180;
+  }
+
+  // Draw the scene.
+  function drawScene(time) {
+    // convert to seconds
+    time *= 0.001;
+    // Subtract the previous time from the current time
+    var deltaTime = time - then;
+    // Remember the current time for the next frame.
+    then = time;
+
+    // Animate the rotation
+    modelYRotationRadians += -0.7 * deltaTime;
+    modelXRotationRadians += -0.4 * deltaTime;
+
+    // Clear the canvas AND the depth buffer.
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    // Compute the projection matrix
+    var aspect = canvas.clientWidth / canvas.clientHeight;
+    var zNear  = 1;
+    var zFar   = 2000;
+    var projectionMatrix =
+        makePerspective(fieldOfViewRadians, aspect, zNear, zFar);
+
+    var cameraPosition = [0, 0, 2];
+    var up = [0, 1, 0];
+    var target = [0, 0, 0];
+
+    // Compute the camera's matrix using look at.
+    var cameraMatrix = makeLookAt(cameraPosition, target, up);
+
+    // Make a view matrix from the camera matrix.
+    var viewMatrix = makeInverse(cameraMatrix);
+
+    var translationMatrix = makeTranslation(0, 0, 0);
+    var xRotationMatrix = makeXRotation(modelXRotationRadians);
+    var yRotationMatrix = makeYRotation(modelYRotationRadians);
+
+    // Multiply the matrices.
+    var matrix = yRotationMatrix;
+    matrix = matrixMultiply(matrix, xRotationMatrix);
+    matrix = matrixMultiply(matrix, translationMatrix);
+    matrix = matrixMultiply(matrix, viewMatrix);
+    matrix = matrixMultiply(matrix, projectionMatrix);
+
+    // Set the matrix.
+    gl.uniformMatrix4fv(matrixLocation, false, matrix);
+
+    // Draw the geometry.
+    gl.drawArrays(gl.TRIANGLES, 0, 6 * 6);
+  }
+
+	// Fill the buffer with the values that define a cube.
+	function setGeometry(gl) {
+	  var positions = new Float32Array(
+		[
+		-0.5, -0.5,  -0.5,
+		-0.5,  0.5,  -0.5,
+		 0.5, -0.5,  -0.5,
+		-0.5,  0.5,  -0.5,
+		 0.5,  0.5,  -0.5,
+		 0.5, -0.5,  -0.5,
+
+		-0.5, -0.5,   0.5,
+		 0.5, -0.5,   0.5,
+		-0.5,  0.5,   0.5,
+		-0.5,  0.5,   0.5,
+		 0.5, -0.5,   0.5,
+		 0.5,  0.5,   0.5,
+
+		-0.5,   0.5, -0.5,
+		-0.5,   0.5,  0.5,
+		 0.5,   0.5, -0.5,
+		-0.5,   0.5,  0.5,
+		 0.5,   0.5,  0.5,
+		 0.5,   0.5, -0.5,
+
+		-0.5,  -0.5, -0.5,
+		 0.5,  -0.5, -0.5,
+		-0.5,  -0.5,  0.5,
+		-0.5,  -0.5,  0.5,
+		 0.5,  -0.5, -0.5,
+		 0.5,  -0.5,  0.5,
+
+		-0.5,  -0.5, -0.5,
+		-0.5,  -0.5,  0.5,
+		-0.5,   0.5, -0.5,
+		-0.5,  -0.5,  0.5,
+		-0.5,   0.5,  0.5,
+		-0.5,   0.5, -0.5,
+
+		 0.5,  -0.5, -0.5,
+		 0.5,   0.5, -0.5,
+		 0.5,  -0.5,  0.5,
+		 0.5,  -0.5,  0.5,
+		 0.5,   0.5, -0.5,
+		 0.5,   0.5,  0.5,
+
+		]);
+	  gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+	}
+
+	// Fill the buffer with texture coordinates the cube.
+	function setTexcoords(gl) {
+	  gl.bufferData(
+		  gl.ARRAY_BUFFER,
+		  new Float32Array(
+			[
+			// select the bottom left image
+			0   , 0  ,
+			0   , 0.5,
+			0.25, 0  ,
+			0   , 0.5,
+			0.25, 0.5,
+			0.25, 0  ,
+			// select the bottom middle image
+			0.25, 0  ,
+			0.5 , 0  ,
+			0.25, 0.5,
+			0.25, 0.5,
+			0.5 , 0  ,
+			0.5 , 0.5,
+			// select to bottom right image
+			0.5 , 0  ,
+			0.5 , 0.5,
+			0.75, 0  ,
+			0.5 , 0.5,
+			0.75, 0.5,
+			0.75, 0  ,
+			// select the top left image
+			0   , 0.5,
+			0.25, 0.5,
+			0   , 1  ,
+			0   , 1  ,
+			0.25, 0.5,
+			0.25, 1  ,
+			// select the top middle image
+			0.25, 0.5,
+			0.25, 1  ,
+			0.5 , 0.5,
+			0.25, 1  ,
+			0.5 , 1  ,
+			0.5 , 0.5,
+			// select the top right image
+			0.5 , 0.5,
+			0.75, 0.5,
+			0.5 , 1  ,
+			0.5 , 1  ,
+			0.75, 0.5,
+			0.75, 1  ,
+
+		  ]),
+		  gl.STATIC_DRAW);
+	}
+</script>
+</body>
+</html>

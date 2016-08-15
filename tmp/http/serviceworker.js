@@ -97,8 +97,8 @@ this.addEventListener('install', function(event) {
 event.waitUntil(
     caches.open(OFFLINE_CACHE).then(function(cache) {
       return cache.addAll([
-        '/sw/sw/index.html',
-        '/sw/sw/app.js',
+        '/sw/tmp/http/index.html',
+        '/sw/tmp/http/app.js',
         'http://qnimg.kagirl.cn/icon/01.jpg',
       ]);
     })

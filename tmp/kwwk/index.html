@@ -50,24 +50,23 @@ function init()
   document.getElementById("saveofflinepage").hidden = false;
 }
 
-document.getElementById("saveofflinepage").addEventListener("click", function() {
-          console.log('saveOfflinePage');
-          tbs_bridge.exec("app", "saveOfflinePage", function(result){
-            console.log(result.ret+" "+result.path);
-            if(result.ret==0)
-            {
-              var url = 'http://res.imtt.qq.com/TES/kawaweika.html'+'?url='+encodeURIComponent(window.location.href)+'&posid='+encodeURIComponent('33')+'&channelid='+encodeURIComponent('com.tencent.mm')+'&cmd='+encodeURIComponent('saveofflinepage')+'&path='+encodeURIComponent(result.path);
-              window.location.replace(url);
-            }
-            else
-            {
-              //for debug
-              alert('保存失败，请联系yongling');
-            }
-            
-          });
+function savepage() {
+      console.log('saveOfflinePage');
+      tbs_bridge.exec("app", "saveOfflinePage", function(result){
+        console.log(result.ret+" "+result.path);
+        if(result.ret==0)
+        {
+          var url = 'http://res.imtt.qq.com/TES/kawaweika.html'+'?url='+encodeURIComponent(window.location.href)+'&posid='+encodeURIComponent('33')+'&channelid='+encodeURIComponent('com.tencent.mm')+'&cmd='+encodeURIComponent('saveofflinepage')+'&path='+encodeURIComponent(result.path);
+          window.location.replace(url);
+        }
+        else
+        {
+          //for debug
+          alert('保存失败，请联系yongling');
+        }
         
-  });
+      }); 
+  }
 
 
 </script>
@@ -76,7 +75,7 @@ document.getElementById("saveofflinepage").addEventListener("click", function() 
 
 <body onload="init()">
 <h1>ServiceWork Test!</h1>
-<button id="saveofflinepage" hidden="true">savepage</button>
+<button id="saveofflinepage" hidden="true" onclick="savepage()">savepage</button>
 </br>
 </br>
 </br>

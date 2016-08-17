@@ -15,7 +15,15 @@ function register() {
 function init()
 {
 
-  register();
+
+  //判断是否为微信环境
+  var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+  if(!isWeChat)
+  {
+    register();
+    alert('非微信环境！');
+    return;
+  }
 
   //If android
   var isAndroid = /android/ig.test(navigator.userAgent)
@@ -29,14 +37,6 @@ function init()
   if (typeof tbsJs == "undefined" || tbsJs.packages == "undefined")
   {
     alert('非TBS环境！');
-    return;
-  }
-
-  //判断是否为微信环境
-  var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
-  if(!isWeChat)
-  {
-    alert('非微信环境！');
     return;
   }
 

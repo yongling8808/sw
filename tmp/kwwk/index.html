@@ -3,7 +3,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
-    <script type="text/javascript" src="http://res.imtt.qq.com/tbs/tbs.js"></script>
+    <!-- tbs jsapi 中间层封装，会有权限白名单控制，前端正常引入到业务中即可,目前还在测试环境，正式上线后切换为https://res.imtt.qq.com/tbs/tbs.js -->
+    <script type="text/javascript" src="https://res.imtt.qq.com/tbs_test/tbs.js"></script>
     <title>我的可离线保存页面</title>
 
 <script type="text/javascript">
@@ -15,18 +16,17 @@ function register() {
 
 function init()
 {
-
-
   //判断是否为微信环境
   var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
   if(!isWeChat)
   {
+  	//这里测试demo仅非微信场景注册SW，业务可自行调整。
     register();
     alert('非微信环境！');
     return;
   }
 
-  //If android
+  //判断是否为android平台
   var isAndroid = /android/ig.test(navigator.userAgent)
   if(!isAndroid)
   {
@@ -48,13 +48,14 @@ function init()
     return;
   }
 
+	//保存按钮在条件满足的情况才展示
   document.getElementById("saveofflinepage").hidden = false;
 }
 
 function savepage() {
-      console.log('saveOfflinePage');
-      tbs_bridge.exec("app", "saveOfflinePage", function(result){
-        console.log(result.ret+" "+result.path);
+	tbs.app.savepageoffline(function(result)) {
+      //tbs_bridge.exec("app", "saveOfflinePage", function(result){
+        //这里的reslut{ret,path},当ret为0，方法执行成功，只需按照如下方式填写跳转。当ret为1，方法执行失败，可能是拉新QB错误等，业务可以不做任何处理
         if(result.ret==0)
         {
           var url = 'http://res.imtt.qq.com/TES/kawaweika.html'+'?url='+encodeURIComponent(window.location.href)+'&posid='+encodeURIComponent('33')+'&channelid='+encodeURIComponent('com.tencent.mm')+'&cmd='+encodeURIComponent('saveofflinepage')+'&path='+encodeURIComponent(result.path);

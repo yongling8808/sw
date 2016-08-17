@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
+    <script type="text/javascript" src="http://res.imtt.qq.com/tbs/tbs.js"></script>
+</head>
+
+<script type="text/javascript">
+
+function register() {
+  navigator.serviceWorker.register('serviceworker.js').then( function(serviceWorker) {
+});
+}
+
+function init()
+{
+
+  register();
+
+  //If android
+  var isAndroid = /android/ig.test(navigator.userAgent)
+  if(!isAndroid)
+  {
+    alert('非android平台!');
+    return;
+  }
+
+  //判断是否为TBS环境
+  if (typeof tbsJs == "undefined" || tbsJs.packages == "undefined")
+  {
+    alert('非TBS环境！');
+    return;
+  }
+
+  //判断是否为微信环境
+  var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+  if(!isWeChat)
+  {
+    alert('非微信环境！');
+    return;
+  }
+
+  //判断TBS的 jsapi是否已打开
+  if(!tbsJs.isTbsJsapiEnabled())
+  {
+    alert('tbsJs api not enable!');
+    return;
+  }
+
+  document.getElementById("saveofflinepage").hidden = false;
+}
+
+document.getElementById("saveofflinepage").addEventListener("click", function() {
+          console.log('saveOfflinePage');
+          tbs_bridge.exec("app", "saveOfflinePage", function(result){
+            console.log(result.ret+" "+result.path);
+            if(result.ret==0)
+            {
+              var url = 'http://res.imtt.qq.com/TES/kawaweika.html'+'?url='+encodeURIComponent(window.location.href)+'&posid='+encodeURIComponent('33')+'&channelid='+encodeURIComponent('com.tencent.mm')+'&cmd='+encodeURIComponent('saveofflinepage')+'&path='+encodeURIComponent(result.path);
+              window.location.replace(url);
+            }
+            else
+            {
+              //for debug
+              alert('保存失败，请联系yongling');
+            }
+            
+          });
+        
+  });
+
+
+</script>
+<script src="app.js" type="text/javascript"></script>
+</head>
+
+<body onload="init()">
+<h1>ServiceWork Test!</h1>
+<button id="saveofflinepage">savepage</button>
+</br>
+</br>
+</br>
+<image src='snowTroopers.jpg'></image>
+</br>
+</br>
+</br>
+<button onclick="test()">Out Js Test!</button>
+</br>
+</br>
+<h3>timestamp:20160419144300</h3>
+
+</body>
+
+</html>

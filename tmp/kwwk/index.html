@@ -53,7 +53,7 @@ function init()
 }
 
 function savepage() {
-	tbs.app.savepageoffline(function(result)) {
+	tbs.app.savepageoffline(function(result) {
       //tbs_bridge.exec("app", "saveOfflinePage", function(result){
         //这里的reslut{ret,path},当ret为0，方法执行成功，只需按照如下方式填写跳转。当ret为1，方法执行失败，可能是拉新QB错误等，业务可以不做任何处理
         if(result.ret==0)
@@ -76,7 +76,6 @@ function savepage() {
 </head>
 
 <body onload="init()">
-<h1>ServiceWork Test!</h1>
 <button id="saveofflinepage" hidden="true" onclick="savepage()">savepage</button>
 </br>
 </br>

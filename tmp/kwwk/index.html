@@ -55,7 +55,7 @@ function init()
 function savepage() {
 	//savepageoffline 是一个异步阻塞型函数，在等待回调过程中最好将button禁用
 	document.getElementById("saveofflinepage").disabled = true;
-	tbs.app.savepageoffline(function(result) {
+	tbs.app.saveOfflinePage(function(result) {
 				document.getElementById("saveofflinepage").disabled = false;
         //这里的reslut{ret,path},当ret为0，方法执行成功，只需按照如下方式填写跳转。当ret为1，方法执行失败，可能是拉新QB错误等，业务可以不做任何处理
         if(result.ret==0)

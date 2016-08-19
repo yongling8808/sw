@@ -33,7 +33,7 @@ var context = new window.AudioContext();
 
 var audioURl = 'http://sound.kagirl.net/sound/qq_1287804.mp3'; 
 var xhr = new XMLHttpRequest();
-xhr.open('GET', audioURL, true);
+xhr.open('GET', audioURl, true);
 xhr.responseType = 'arraybuffer';
 xhr.onload = function() {
    context.decodeAudioData(request.response, function (buffer) {

@@ -32,10 +32,10 @@ window.AudioContext = window['AudioContext '] || window['webkitAudioContext'];
 var context = new window.AudioContext();
 
 var audioURl = 'http://sound.kagirl.net/sound/qq_1287804.mp3'; 
-var xhr = new XMLHttpRequest();
-xhr.open('GET', audioURl, true);
-xhr.responseType = 'arraybuffer';
-xhr.onload = function() {
+var request = new XMLHttpRequest();
+request.open('GET', audioURl, true);
+request.responseType = 'arraybuffer';
+request.onload = function() {
    context.decodeAudioData(request.response, function (buffer) {
        source = context.createBufferSource();
        source.buffer = buffer;
@@ -43,7 +43,7 @@ xhr.onload = function() {
        source.start(0,0,60);
  });
 };
-xhr.send();
+request.send();
 
 }
 

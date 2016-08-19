@@ -25,6 +25,26 @@ if(serviceWorker.installing) {
 // you might call window.location.reload()
  
 });
+
+
+
+window.AudioContext = window['AudioContext '] || window['webkitAudioContext'];
+var context = new window.AudioContext();
+
+var audioURl = 'http://sound.kagirl.net/sound/qq_1287804.mp3'; 
+var xhr = new XMLHttpRequest();
+xhr.open('GET', audioURL, true);
+xhr.responseType = 'arraybuffer';
+xhr.onload = function() {
+   context.decodeAudioData(request.response, function (buffer) {
+       source = context.createBufferSource();
+       source.buffer = buffer;
+       source.connect(context.destination);
+       source.start(0,0,60);
+ });
+};
+xhr.send();
+
 }
 
 window.addEventListener('message', function(event) {

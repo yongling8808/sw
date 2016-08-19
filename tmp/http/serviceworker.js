@@ -100,6 +100,7 @@ event.waitUntil(
         '/sw/tmp/http/index.html',
         '/sw/tmp/http/app.js',
         'http://res.imtt.qq.com/homepage/real/206ba52e029d4848a5d292bdeaf7bd05.png',
+        'http://sound.kagirl.net/sound/qq_1287804.mp3',
       ]);
     })
   );

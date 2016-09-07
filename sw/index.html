@@ -28,6 +28,7 @@ if(serviceWorker.installing) {
 }
 
 window.addEventListener('message', function(event) {
+  console.log('Received message:'+event.data);
   alert("Received message!");
 	if(event.data == "serviceworker-update")
 	{
@@ -53,7 +54,7 @@ window.addEventListener('message', function(event) {
 <button onclick="test()">Out Js Test!</button>
 </br>
 </br>
-<h3>timestamp:20160907151000</h3>
+<h3>timestamp:20160907152000</h3>
 
 </body>
 

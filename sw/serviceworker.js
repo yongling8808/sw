@@ -121,7 +121,7 @@ this.addEventListener('fetch', function(event)  {
   //         client.postMessage('serviceworker-update');
   //     });
   // });  
-  
+   
    
   console.log('serviceworker thread onfetch function');
   console.log('this comes frome server!');

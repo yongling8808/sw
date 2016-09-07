@@ -37,6 +37,16 @@ window.addEventListener('message', function(event) {
 	}
 });
 
+navigator.serviceWorker.addEventListener('message', function(event) {
+  console.log('Received message1:'+event.data);
+  alert("Received message1!");
+  if(event.data == "serviceworker-update")
+  {
+    alert("page have updated1!");
+    return;
+  }
+});
+
 </script>
 <script src="app.js" type="text/javascript"></script>
 </head>
@@ -54,7 +64,7 @@ window.addEventListener('message', function(event) {
 <button onclick="test()">Out Js Test!</button>
 </br>
 </br>
-<h3>timestamp:20160907152000</h3>
+<h3>timestamp:20160907155400</h3>
 
 </body>
 

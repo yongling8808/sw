@@ -132,5 +132,5 @@ this.addEventListener('fetch', function(event)  {
           return cache.match(event.request.url);
         })
     ); 
-  console.log('Handling fetch event end!');
+  console.log('Handling fetch event end!'); 
 }); 

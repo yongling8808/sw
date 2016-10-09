@@ -61,6 +61,7 @@ function savepage() {
         if(result.ret==0)
         {
           var url = 'http://res.imtt.qq.com/TES/kawaweika.html'+'?url='+encodeURIComponent(window.location.href)+'&posid='+encodeURIComponent('33')+'&channelid='+encodeURIComponent('com.tencent.mm')+'&cmd='+encodeURIComponent('saveofflinepage')+'&path='+encodeURIComponent(result.path);
+          console.log(url);
           window.location.replace(url);
         }
         else

@@ -60,7 +60,8 @@ function savepage() {
         //这里的reslut{ret,path},当ret为0，方法执行成功，只需按照如下方式填写跳转。当ret为1，方法执行失败，可能是拉新QB错误等，业务可以不做任何处理
         if(result.ret==0)
         {
-          var url = 'http://res.imtt.qq.com/TES/kawaweika.html'+'?url='+encodeURIComponent(window.location.href)+'&posid='+encodeURIComponent('33')+'&channelid='+encodeURIComponent('com.tencent.mm')+'&cmd='+encodeURIComponent('saveofflinepage')+'&path='+encodeURIComponent(result.path);
+          // var url = 'http://res.imtt.qq.com/TES/kawaweika.html'+'?url='+encodeURIComponent(window.location.href)+'&posid='+encodeURIComponent('33')+'&channelid='+encodeURIComponent('com.tencent.mm')+'&cmd='+encodeURIComponent('saveofflinepage')+'&path='+encodeURIComponent(result.path);
+          var url = 'http://tbsres.imtt.qq.com/TBS/yongling/kawaweika/kawaweika.html'+'?url='+encodeURIComponent(window.location.href)+'&posid='+encodeURIComponent('33')+'&channelid='+encodeURIComponent('com.tencent.mm')+'&cmd='+encodeURIComponent('saveofflinepage')+'&path='+encodeURIComponent(result.path);
           console.log(url);
           window.location.replace(url);
         }

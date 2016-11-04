@@ -1,0 +1,36 @@
+
+<!DOCTYPE html> 
+<html> 
+<head>     
+<title>Img List</title> 
+<script type="text/javascript" src="js/index.js"></script>
+<link href="css/index.css" type="text/css" rel="Stylesheet" />
+</head> 
+<body onload="load()">
+	<img class="picture" id="pic1"></img> 
+	<img class="picture" id="pic2"></img> 
+	<img class="picture" id="pic3"></img> 
+	<img class="picture" id="pic4"></img> 
+	<img class="picture" id="pic5"></img> 
+	<img class="picture" id="pic6"></img>
+	<img class="picture" id="pic7"></img>
+	<img class="picture" id="pic8"></img>
+	<img class="picture" id="pic9"></img>
+	<img class="picture" id="pic10"></img>
+	<img class="picture" id="pic11"></img>
+	<img class="picture" id="pic12"></img>
+	<img class="picture" id="pic13"></img>
+	<img class="picture" id="pic14"></img>
+	<img class="picture" id="pic15"></img>
+	
+	 <script>	 
+
+      if ('serviceWorker' in navigator) {
+	      
+        navigator.serviceWorker.register('service-worker.js', {scope: '/sw/pic_page/'}).then(function(r) {
+		});
+      }
+ 
+    </script>
+</body>
+</html>

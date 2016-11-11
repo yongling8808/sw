@@ -76,6 +76,7 @@ self.addEventListener('install', function(event) {
 });
 
 this.addEventListener('activate', function(event) {
+	event.waitUntil(
      caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
      	var preload = 'preloadToMemory='
      								+'https://yongling8808.github.io/sw/pic_page/js/index.js,'
@@ -95,9 +96,10 @@ this.addEventListener('activate', function(event) {
      								+'https://yongling8808.github.io/sw/pic_page/img/13.jpg,'
      								+'https://yongling8808.github.io/sw/pic_page/img/14.jpg,'
      								+'https://yongling8808.github.io/sw/pic_page/img/15.jpg';
-     	var body = new Blob(preload)
+     	var body = new Blob(preload);
      	cache.put('https://x5sw.qq.com/config',new Response(body));
-   });	
+   })
+   );
 });
 
 /*self.addEventListener('fetch', function(event) {

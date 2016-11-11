@@ -28,7 +28,7 @@ this.addEventListener('activate', function(event) {
      	console.log('activate2');
      	var body = new Blob(preload);
      	console.log('activate3');
-     	var response = new Response();
+     	var response = new Response(body);
      	console.log('activate4');
      	return cache.put('https://x5sw.qq.com/config',response);
    })

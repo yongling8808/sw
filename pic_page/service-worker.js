@@ -79,25 +79,25 @@ this.addEventListener('activate', function(event) {
 	event.waitUntil(
      caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
      	var preload = ['preloadToMemory='
-     								+'https://yongling8808.github.io/sw/pic_page/js/index.js,'
-     								+'https://yongling8808.github.io/sw/pic_page/css/index.css,' 
-     								+'https://yongling8808.github.io/sw/pic_page/img/1.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/2.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/3.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/4.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/5.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/6.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/7.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/8.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/9.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/10.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/11.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/12.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/13.jpg,'
-     								+'https://yongling8808.github.io/sw/pic_page/img/14.jpg,'
+     								+'https://yongling8808.github.io/sw/pic_page/js/index.js|'
+     								+'https://yongling8808.github.io/sw/pic_page/css/index.css|' 
+     								+'https://yongling8808.github.io/sw/pic_page/img/1.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/2.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/3.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/4.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/5.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/6.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/7.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/8.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/9.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/10.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/11.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/12.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/13.jpg|'
+     								+'https://yongling8808.github.io/sw/pic_page/img/14.jpg|'
      								+'https://yongling8808.github.io/sw/pic_page/img/15.jpg'];
      	var body = new Blob(preload);
-     	cache.put('https://x5sw.qq.com/config',new Response(body));
+     	return cache.put('https://x5sw.qq.com/config',new Response(body));
    })
    );
 });

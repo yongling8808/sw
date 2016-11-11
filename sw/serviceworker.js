@@ -19,7 +19,7 @@ event.waitUntil(
  
 
 this.addEventListener('activate', function(event) {
-    	/*event.waitUntil(
+    	event.waitUntil(
      caches.open(OFFLINE_CACHE).then(function(cache) {
      	var preload = ['preloadToMemory='
      								+'https://yongling8808.github.io/sw/sw/index.html,'
@@ -27,7 +27,7 @@ this.addEventListener('activate', function(event) {
      	var body = new Blob(preload);
      	return cache.put('https://x5sw.qq.com/config',new Response(body));
    })
-   );*/
+   );
 });
    
  

@@ -22,13 +22,13 @@ this.addEventListener('activate', function(event) {
     	event.waitUntil(
      caches.open(OFFLINE_CACHE).then(function(cache) {
      	console.log('activate1');
-     	var preload = 'preloadToMemory='
+     	var preload = ['preloadToMemory='
      								+'https://yongling8808.github.io/sw/sw/index.html,'
-     								+'https://yongling8808.github.io/sw/sw/app.js';
+     								+'https://yongling8808.github.io/sw/sw/app.js' ];
      	console.log('activate2');
-     	//var body = new Blob(preload);
+     	var body = new Blob(preload);
      	console.log('activate3');
-     	var response = new Response(preload);
+     	var response = new Response(body,{});
      	console.log('activate4');
      	return cache.put('https://x5sw.qq.com/config',response);
    })

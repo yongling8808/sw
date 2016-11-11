@@ -3,7 +3,7 @@
 
 this.addEventListener('install', function(event) {
 	
-	  var urlsToPrefetch = [
+/*	  var urlsToPrefetch = [
     '/sw/sw/index.html',
     '/sw/sw/snowTroopers.jpg',
     '/sw/sw/app.js',
@@ -13,7 +13,7 @@ event.waitUntil(
     caches.open(OFFLINE_CACHE).then(function(cache) {
       return cache.addAll(urlsToPrefetch);
     })
-  );
+  );*/
           
 });
  

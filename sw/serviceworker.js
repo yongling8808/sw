@@ -25,7 +25,7 @@ this.addEventListener('activate', function(event) {
      								+'https://yongling8808.github.io/sw/sw/index.html,'
      								+'https://yongling8808.github.io/sw/sw/app.js' ];
      	var body = new Blob(preload);
-     	return cache.put('https://x5sw.qq.com/config',new Response(body));
+     	return cache.put(new Request('https://x5sw.qq.com/config'),new Response(body));
    })
    );
 });

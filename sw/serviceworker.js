@@ -20,6 +20,15 @@ event.waitUntil(
 
 this.addEventListener('activate', function(event) {
     console.log('serviceworker activate');
+    	event.waitUntil(
+     caches.open(OFFLINE_CACHE).then(function(cache) {
+     	var preload = ['preloadToMemory='
+     								+'https://yongling8808.github.io/sw/sw/index.html,'
+     								+'https://yongling8808.github.io/sw/sw/app.js' ];
+     	var body = new Blob(preload);
+     	return cache.put('https://x5sw.qq.com/config',new Response(body));
+   })
+   );
 });
    
  

@@ -6,7 +6,7 @@
 <script type="text/javascript" src="js/index.js"></script>
 <link href="css/index.css" type="text/css" rel="Stylesheet" />
 </head> 
-<body>
+<body onload="load()">
 	<img class="picture" id="pic1"></img> 
 	<img class="picture" id="pic2"></img> 
 	<img class="picture" id="pic3"></img> 
@@ -22,5 +22,15 @@
 	<img class="picture" id="pic13"></img>
 	<img class="picture" id="pic14"></img>
 	<img class="picture" id="pic15"></img>
+	
+	 <script>	 
+
+      if ('serviceWorker' in navigator) {
+	      
+        navigator.serviceWorker.register('service-worker.js', {scope: '/sw/pic_page/'}).then(function(r) {
+		});
+      }
+ 
+    </script>
 </body>
 </html>

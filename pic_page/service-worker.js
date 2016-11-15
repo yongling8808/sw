@@ -5,10 +5,12 @@
 var OFFLINE_CACHE = 'offline';
 var OFFLINE_URL = 'offline.html';
 
-var CACHE_VERSION = 1;
-var CURRENT_CACHES = {
-  prefetch: 'prefetch-cache-v' + CACHE_VERSION
-};
+//var CACHE_VERSION = 1;
+//var CURRENT_CACHES = {
+//  prefetch: 'prefetch-cache-v' + CACHE_VERSION
+//};
+
+var CURRENT_CACHES = 'https://yongling8808.github.io/sw/pic_page/';
 
 
 self.addEventListener('activate', function(e) {
@@ -95,7 +97,8 @@ this.addEventListener('activate', function(event) {
      								+'https://yongling8808.github.io/sw/pic_page/img/12.jpg|'
      								+'https://yongling8808.github.io/sw/pic_page/img/13.jpg|'
      								+'https://yongling8808.github.io/sw/pic_page/img/14.jpg|'
-     								+'https://yongling8808.github.io/sw/pic_page/img/15.jpg'];
+     								+'https://yongling8808.github.io/sw/pic_page/img/15.jpg'
+     								+'||fetchMode=3'];
      	var body = new Blob(preload);
      	return cache.put('https://x5sw.qq.com/config',new Response(body));
    })

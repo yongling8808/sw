@@ -10,8 +10,10 @@ var OFFLINE_URL = 'offline.html';
 //  prefetch: 'prefetch-cache-v' + CACHE_VERSION
 //};
 
-var CURRENT_CACHES = 'https://yongling8808.github.io/sw/pic_page/';
 
+var CURRENT_CACHES = {
+  prefetch: 'https://yongling8808.github.io/sw/pic_page/'
+};
 
 self.addEventListener('activate', function(e) {
   console.log('Activate event:' + e);

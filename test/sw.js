@@ -48,7 +48,7 @@ console.log('fetching url: ' + requestUrl);
                 console.log('response: ' + response);
                 // Cache hit - return response
                 if (response) {
-                    console.log(`${ event.request.url } cache hit`);
+                    //console.log(`${ event.request.url } cache hit`);
                     return response;
                 }
 

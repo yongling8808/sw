@@ -8,16 +8,16 @@ var urlsToCache = [
     '/js/libs-min.js'
 ];
 
-// self.addEventListener('install', function (event) {
-//     console.log('---on service worker install---');
-// });
+ self.addEventListener('install', function (event) {
+     console.log('---on service worker install---');
+ });
 
 self.addEventListener('fetch', function(event) {
     var requestUrl = event.request.url;
 
 console.log('fetching url: ' + requestUrl);
 
-    var match = false;
+ /*   var match = false;
     for(var i = 0; i < urlsToCache.length; ++i){
         var url = urlsToCache[i];
         if(url instanceof RegExp){
@@ -84,13 +84,13 @@ console.log('fetching url: ' + requestUrl);
                     }
                 );
             })
-    );
+    );*/
 });
 
 self.addEventListener('activate', function(event) {
     console.log('---on service worker activate---');
 
-    var cacheWhitelist = ['pages-cache-v1'];
+   /* var cacheWhitelist = ['pages-cache-v1'];
 
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
@@ -103,5 +103,5 @@ self.addEventListener('activate', function(event) {
                 })
             );
         })
-    );
+    );*/
 });

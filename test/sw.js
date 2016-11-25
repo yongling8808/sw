@@ -17,7 +17,7 @@ self.addEventListener('fetch', function(event) {
 
 console.log('fetching url: ' + requestUrl);
 
- /*   var match = false;
+    var match = false;
     for(var i = 0; i < urlsToCache.length; ++i){
         var url = urlsToCache[i];
         if(url instanceof RegExp){
@@ -40,7 +40,7 @@ console.log('fetching url: ' + requestUrl);
         req = event.request.clone();
     }
 
-    console.log(`service worker fetching ${ event.request.url }`);
+    //console.log(`service worker fetching ${ event.request.url }`);
 
     event.respondWith(
         caches.match(req)
@@ -76,7 +76,7 @@ console.log('fetching url: ' + requestUrl);
 
                         caches.open(CACHE_NAME)
                             .then(function(cache) {
-                                console.log(`${ event.request.url } put into cache`);
+                                //console.log(`${ event.request.url } put into cache`);
                                 cache.put(req.clone(), responseToCache);
                             });
 
@@ -84,7 +84,7 @@ console.log('fetching url: ' + requestUrl);
                     }
                 );
             })
-    );*/
+    );
 });
 
 self.addEventListener('activate', function(event) {

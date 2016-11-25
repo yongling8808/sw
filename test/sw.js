@@ -90,7 +90,7 @@ console.log('fetching url: ' + requestUrl);
 self.addEventListener('activate', function(event) {
     console.log('---on service worker activate---');
 
-   /* var cacheWhitelist = ['pages-cache-v1'];
+    var cacheWhitelist = ['pages-cache-v1'];
 
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
@@ -103,5 +103,5 @@ self.addEventListener('activate', function(event) {
                 })
             );
         })
-    );*/
+    );
 });

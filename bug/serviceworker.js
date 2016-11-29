@@ -19,13 +19,13 @@ var addToCache = function(req) {
 };
 
 self.addEventListener('activate', function(event) {
-    /*event.waitUntil(caches.keys().then(function(cacheNames) {
+    event.waitUntil(caches.keys().then(function(cacheNames) {
         return Promise.all(cacheNames.map(function(cacheName) {
-            if (cacheName !== config.db) {
+            /*if (cacheName !== config.db) {
                 return caches.delete(cacheName);
-            }
+            }*/
         }));
-    }));*/
+    }));
 });
 
 self.addEventListener('fetch', function(event) {

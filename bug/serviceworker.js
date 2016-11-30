@@ -1,6 +1,6 @@
 
 var config = {
-    db : 'db_20161129173400'
+    db : 'db_20161130124500'
 };
 
 var addToCache = function(req) {
@@ -21,9 +21,9 @@ var addToCache = function(req) {
 self.addEventListener('activate', function(event) {
     event.waitUntil(caches.keys().then(function(cacheNames) {
         return Promise.all(cacheNames.map(function(cacheName) {
-            //if (cacheName !== config.db) {
+            if (cacheName !== config.db) {
                 return caches.delete(cacheName);
-            //}
+            }
         }));
     }));
 });

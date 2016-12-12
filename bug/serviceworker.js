@@ -815,7 +815,8 @@ if (tplOptions) {
     ,
     {}
 );
-routes.add(route);*/
+routes.add(route);
+*/
 
 self.addEventListener('install', function(event) {
 	console.log('on install event!');

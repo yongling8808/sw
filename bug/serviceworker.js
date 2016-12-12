@@ -757,7 +757,7 @@ function installListener(event, options) {
 
 /**********************************************************************************/
 //
-var routes = new Routes();
+/*var routes = new Routes();
 var defaultOptions = {
     cache: {
         name: 'tt-sw-cache-' + scope,
@@ -791,7 +791,7 @@ if (tplOptions) {
     if (tplOptions.successResponses instanceof RegExp) {
         options.successResponses = tplOptions.successResponses;
     }
-}
+}*/
 //method, path, handler, options
 /*
 1 --  networkFirst
@@ -801,7 +801,7 @@ if (tplOptions) {
 5 --  cacheOnly
 */
 
-var route = new Route(
+/*var route = new Route(
     'GET',
 
     "*.jpg"
@@ -816,7 +816,7 @@ var route = new Route(
     {}
 );
 routes.add(route);
-
+*/
 
 self.addEventListener('install', function(event) {
 	console.log('on install event!');

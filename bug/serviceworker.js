@@ -758,8 +758,8 @@ function installListener(event, options) {
 /**********************************************************************************/
 //
 
-var routes = new Routes();
-/*var defaultOptions = {
+/*var routes = new Routes();
+var defaultOptions = {
     cache: {
         name: 'tt-sw-cache-' + scope,
         method : ['get']

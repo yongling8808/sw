@@ -804,7 +804,7 @@ if (tplOptions) {
 var route = new Route(
     'GET',
 
-    "*.jpg"
+    '*.jpg'
 
     ,
 

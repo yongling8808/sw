@@ -801,20 +801,21 @@ if (tplOptions) {
 5 --  cacheOnly
 */
 
-var route = new Route(
+/*var route = new Route(
     'GET',
 
-    '*.jpg'
+    "*.jpg"
 
     ,
 
     function(request, values, options) {
-        return fetch('./sw02.jpg');
+        return fetch("./sw02.jpg");
     }
 
     ,
     {}
-);
+);*/
+var route = new Route('GET', '*.jpg', function(){}, {});
 routes.add(route);
 
 self.addEventListener('install', function(event) {

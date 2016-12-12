@@ -820,12 +820,14 @@ routes.add(route);
 
 self.addEventListener('install', function(event) {
 	console.log('on install event!');
-    installListener(event, options);
+    //installListener(event, options);
 });
 self.addEventListener('activate', function(event) {
-    activateListener(event, options);
+	console.log('on install event!');
+    //activateListener(event, options);
 });
 self.addEventListener('fetch', function(event) {
-    fetchListener(event, routes);
+	console.log('on install event!');
+    //fetchListener(event, routes);
 });
 /**********************************************************************************/

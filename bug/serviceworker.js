@@ -801,7 +801,7 @@ if (tplOptions) {
 5 --  cacheOnly
 */
 
-/*var route = new Route(
+var route = new Route(
     'GET',
 
     "*.jpg"
@@ -816,7 +816,6 @@ if (tplOptions) {
     {}
 );
 routes.add(route);
-*/
 
 self.addEventListener('install', function(event) {
 	console.log('on install event!');

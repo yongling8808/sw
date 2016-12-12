@@ -759,7 +759,7 @@ function installListener(event, options) {
 //
 
 var routes = new Routes();
-var defaultOptions = {
+/*var defaultOptions = {
     cache: {
         name: 'tt-sw-cache-' + scope,
         method : ['get']
@@ -769,7 +769,7 @@ var defaultOptions = {
     preCacheItems: [],
     successResponses: /^0|([123]\d\d)|(40[14567])|410$/
 };
-/*var tplOptions = {"cache":{"name":"sw_run_test_new"},"preCacheItems":[]};
+var tplOptions = {"cache":{"name":"sw_run_test_new"},"preCacheItems":[]};
 var options = defaultOptions;
 if (tplOptions) {
     if (tplOptions.cache) {

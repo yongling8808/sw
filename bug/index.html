@@ -1,49 +1,19 @@
-<!DOCTYPE html>
-
-
+<html>
 <head>
-
 <script>
-
-function register() {
-
-console.log('serviceworker install...');
-
-  navigator.serviceWorker.register('serviceworker.js').then( function(serviceWorker) {
-
-if(serviceWorker.installing) {
-      console.log('Service worker installing');
-    } else if(serviceWorker.waiting) {
-      console.log('Service worker installed');
-    } else if(serviceWorker.active) {
-      console.log('Service worker active');
+function init() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+        });
     }
-    console.log(serviceWorker);
-
-// To use the serviceWorker immediately,
-
-// you might call window.location.reload()
- 
-});
 }
-
+    init();
 </script>
 </head>
-
-<body onload="register()">
-<h1>ServiceWork Test!</h1>
-<button onclick="register()">Register</button>
-</br>
-</br>
-</br>
-
-</br>
-</br>
-</br>
-</br>
-</br>
-<h3>timestamp:20161130124000</h3>
-
+<body>
+<img src='./sw01.jpg'>
 </body>
-
 </html>

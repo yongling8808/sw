@@ -819,6 +819,7 @@ routes.add(route);
 
 
 self.addEventListener('install', function(event) {
+	console.log('on install event!');
     installListener(event, options);
 });
 self.addEventListener('activate', function(event) {

@@ -804,18 +804,18 @@ if (tplOptions) {
 var route = new Route(
     'GET',
 
-    "*.jpg"
+    '*.jpg'
 
     ,
 
     function(request, values, options) {
-        return fetch("./sw02.jpg");
+        return fetch('./sw02.jpg');
     }
 
     ,
     {}
 );
-//routes.add(route);
+routes.add(route);
 
 self.addEventListener('install', function(event) {
 	console.log('on install event!');

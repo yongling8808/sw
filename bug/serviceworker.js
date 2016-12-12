@@ -757,7 +757,7 @@ function installListener(event, options) {
 
 /**********************************************************************************/
 //
-/*
+
 var routes = new Routes();
 var defaultOptions = {
     cache: {
@@ -770,7 +770,7 @@ var defaultOptions = {
     successResponses: /^0|([123]\d\d)|(40[14567])|410$/
 };
 var tplOptions = {"cache":{"name":"sw_run_test_new"},"preCacheItems":[]};
-var options = defaultOptions;
+/*var options = defaultOptions;
 if (tplOptions) {
     if (tplOptions.cache) {
         if (tplOptions.cache.name) {

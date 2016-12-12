@@ -757,6 +757,7 @@ function installListener(event, options) {
 
 /**********************************************************************************/
 //
+/*
 var routes = new Routes();
 var defaultOptions = {
     cache: {
@@ -791,7 +792,7 @@ if (tplOptions) {
     if (tplOptions.successResponses instanceof RegExp) {
         options.successResponses = tplOptions.successResponses;
     }
-}
+}*/
 //method, path, handler, options
 /*
 1 --  networkFirst

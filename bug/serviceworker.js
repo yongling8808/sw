@@ -814,9 +814,8 @@ if (tplOptions) {
 
     ,
     {}
-);*/
-var route = new Route('GET', '*.jpg', function(){}, {});
-routes.add(route);
+);
+routes.add(route);*/
 
 self.addEventListener('install', function(event) {
 	console.log('on install event!');

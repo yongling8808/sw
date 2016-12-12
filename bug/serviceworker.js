@@ -757,7 +757,7 @@ function installListener(event, options) {
 
 /**********************************************************************************/
 //
-/*var routes = new Routes();
+var routes = new Routes();
 var defaultOptions = {
     cache: {
         name: 'tt-sw-cache-' + scope,
@@ -791,7 +791,7 @@ if (tplOptions) {
     if (tplOptions.successResponses instanceof RegExp) {
         options.successResponses = tplOptions.successResponses;
     }
-}*/
+}
 //method, path, handler, options
 /*
 1 --  networkFirst

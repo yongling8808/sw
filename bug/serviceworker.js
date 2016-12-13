@@ -902,10 +902,13 @@ Routes.prototype.matchMethod = function(method, url) {
 /**********************************************************************************/
 //
 function fetchListener(event, routes) {
+	console.log('fetchListener');
     var handler = routes.match(event.request);
     if (handler) {
+    	console.log('fetchListener-inhandler');
         event.respondWith(handler(event.request));
     } else {
+    	console.log('fetchListener-nothandler');
         event.respondWith(fetch(event.request))
     }
 }
@@ -942,7 +945,7 @@ var defaultOptions = {
         name : 'tt-sw-cache-' + scope,
         method : ['get']
     },
-    debug : false,
+    debug : true,
     networkTimeoutSeconds : 5,
     preCacheItems : [],
     successResponses : /^0|([123]\d\d)|(40[14567])|410$/

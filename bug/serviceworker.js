@@ -1,14 +1,192 @@
 /**********************************************************************************/
-//
+
 var scope;
 if (self.registration) {
     scope = self.registration.scope;
 } else {
     scope = self.scope || new URL('./', self.location).href;
 }
-
+/**********************************************************************************/
 /**********************************************************************************/
 
+(function (exports) {'use strict';
+    //shared pointer
+    var i;
+    //shortcuts
+    var defineProperty = Object.defineProperty, is = function(a,b) { return (a === b) || (a !== a && b !== b) };
+
+    if (typeof Map == 'undefined' || typeof ((new Map).values) !== 'function' || !(new Map).values().next) {
+        exports.Map = createCollection({
+            // WeakMap#delete(key:void*):boolean
+            'delete': sharedDelete,
+            //:was Map#get(key:void*[, d3fault:void*]):void*
+            // Map#has(key:void*):boolean
+            has: mapHas,
+            // Map#get(key:void*):boolean
+            get: sharedGet,
+            // Map#set(key:void*, value:void*):void
+            set: sharedSet,
+            // Map#keys(void):Iterator
+            keys: sharedKeys,
+            // Map#values(void):Iterator
+            values: sharedValues,
+            // Map#entries(void):Iterator
+            entries: mapEntries,
+            // Map#forEach(callback:Function, context:void*):void ==> callback.call(context, key, value, mapObject) === not in specs`
+            forEach: sharedForEach,
+            // Map#clear():
+            clear: sharedClear
+        });
+    }
+
+    /**
+     * ES6 collection constructor
+     * @return {Function} a collection class
+     */
+    function createCollection(proto, objectOnly){
+        function Collection(a){
+            if (!this || this.constructor !== Collection) return new Collection(a);
+            this._keys = [];
+            this._values = [];
+            this._itp = []; // iteration pointers
+            this.objectOnly = objectOnly;
+
+            //parse initial iterable argument passed
+            if (a) init.call(this, a);
+        }
+
+        //define size for non object-only collections
+        if (!objectOnly) {
+            defineProperty(proto, 'size', {
+                get: sharedSize
+            });
+        }
+
+        //set prototype
+        proto.constructor = Collection;
+        Collection.prototype = proto;
+
+        return Collection;
+    }
+
+
+    /** parse initial iterable argument passed */
+    function init(a){
+        var i;
+        //init Set argument, like `[1,2,3,{}]`
+        if (this.add)
+            a.forEach(this.add, this);
+        //init Map argument like `[[1,2], [{}, 4]]`
+        else
+            a.forEach(function(a){this.set(a[0],a[1])}, this);
+    }
+
+
+    /** delete */
+    function sharedDelete(key) {
+        if (this.has(key)) {
+            this._keys.splice(i, 1);
+            this._values.splice(i, 1);
+            // update iteration pointers
+            this._itp.forEach(function(p) { if (i < p[0]) p[0]--; });
+        }
+        // Aurora here does it while Canary doesn't
+        return -1 < i;
+    }
+
+    function sharedGet(key) {
+        return this.has(key) ? this._values[i] : undefined;
+    }
+
+    function has(list, key) {
+        if (this.objectOnly && key !== Object(key))
+            throw new TypeError("Invalid value used as weak collection key");
+        //NaN or 0 passed
+        if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key);){}
+        else i = list.indexOf(key);
+        return -1 < i;
+    }
+
+    function setHas(value) {
+        return has.call(this, this._values, value);
+    }
+
+    function mapHas(value) {
+        return has.call(this, this._keys, value);
+    }
+
+    /** @chainable */
+    function sharedSet(key, value) {
+        this.has(key) ?
+            this._values[i] = value
+            :
+            this._values[this._keys.push(key) - 1] = value
+        ;
+        return this;
+    }
+
+    /** @chainable */
+    function sharedAdd(value) {
+        if (!this.has(value)) this._values.push(value);
+        return this;
+    }
+
+    function sharedClear() {
+        (this._keys || 0).length =
+            this._values.length = 0;
+    }
+
+    /** keys, values, and iterate related methods */
+    function sharedKeys() {
+        return sharedIterator(this._itp, this._keys);
+    }
+
+    function sharedValues() {
+        return sharedIterator(this._itp, this._values);
+    }
+
+    function mapEntries() {
+        return sharedIterator(this._itp, this._keys, this._values);
+    }
+
+    function setEntries() {
+        return sharedIterator(this._itp, this._values, this._values);
+    }
+
+    function sharedIterator(itp, array, array2) {
+        var p = [0], done = false;
+        itp.push(p);
+        return {
+            next: function() {
+                var v, k = p[0];
+                if (!done && k < array.length) {
+                    v = array2 ? [array[k], array2[k]]: array[k];
+                    p[0]++;
+                } else {
+                    done = true;
+                    itp.splice(itp.indexOf(p), 1);
+                }
+                return { done: done, value: v };
+            }
+        };
+    }
+
+    function sharedSize() {
+        return this._values.length;
+    }
+
+    function sharedForEach(callback, context) {
+        var it = this.entries();
+        for (;;) {
+            var r = it.next();
+            if (r.done) break;
+            callback.call(context, r.value[1], r.value[0], this);
+        }
+    }
+
+})(typeof exports != 'undefined' && typeof global != 'undefined' ?
+    global : typeof window != 'undefined' ? window : self);
+/**********************************************************************************/
 /**********************************************************************************/
 var pathRegexp = (function() {
     var isarray = Array.isArray || function (arr) {
@@ -460,7 +638,7 @@ function networkFirst(request, values, options) {
     options = options || {};
     var successResponses = options.successResponses;
     var networkTimeoutSeconds = options.networkTimeoutSeconds;
-    //debug('Strategy: network first [' + request.url + ']', options);
+    debug('Strategy: network first [' + request.url + ']', options);
 
     return caches.open(options.cache.name).then(function(cache) {
         var timeoutId;
@@ -490,13 +668,13 @@ function networkFirst(request, values, options) {
                     return response;
                 }
 
-                //debug('Response was an HTTP error: ' + response.statusText,
-                //    options);
+                debug('Response was an HTTP error: ' + response.statusText,
+                    options);
                 originalResponse = response;
                 throw new Error('Bad response');
             }).catch(function(error) {
-                //debug('Network or response error, fallback to cache [' +
-                //    request.url + ']', options);
+                debug('Network or response error, fallback to cache [' +
+                    request.url + ']', options);
                 return cache.match(request).then(function(response) {
                     if (response) {
                         return response;
@@ -515,14 +693,14 @@ function networkFirst(request, values, options) {
 }
 
 function cacheOnly(request, values, options) {
-    //debug('Strategy: cache only [' + request.url + ']', options);
+    debug('Strategy: cache only [' + request.url + ']', options);
     return caches.open(options.cache.name).then(function(cache) {
         return cache.match(request);
     });
 }
 
 function cacheFirst(request, values, options) {
-    //debug('Strategy: cache first [' + request.url + ']', options);
+    debug('Strategy: cache first [' + request.url + ']', options);
     return caches.open(options.cache.name).then(function(cache) {
         return cache.match(request).then(function(response) {
             if (response) {
@@ -559,7 +737,7 @@ function fetchAndCache(request, options) {
 }
 
 function fastest(request, values, options) {
-    //debug('Strategy: fastest [' + request.url + ']', options);
+    debug('Strategy: fastest [' + request.url + ']', options);
 
     return new Promise(function(resolve, reject) {
         var rejected = false;
@@ -757,24 +935,27 @@ function installListener(event, options) {
 
 /**********************************************************************************/
 //
-var routes = new Map();
-/*var routes = new Routes();
+var routes = new Routes();
 var defaultOptions = {
-    cache: {
-        name: 'tt-sw-cache-' + scope,
+    version : 0,
+    cache : {
+        name : 'tt-sw-cache-' + scope,
         method : ['get']
     },
-    debug: true,
-    networkTimeoutSeconds: 5,
-    preCacheItems: [],
-    successResponses: /^0|([123]\d\d)|(40[14567])|410$/
+    debug : false,
+    networkTimeoutSeconds : 5,
+    preCacheItems : [],
+    successResponses : /^0|([123]\d\d)|(40[14567])|410$/
 };
-var tplOptions = {"cache":{"name":"sw_run_test_new"},"preCacheItems":[]};
+var tplOptions = {"version":1,"cache":{"name":"sw_run_test"},"preCacheItems":[]};
 var options = defaultOptions;
 if (tplOptions) {
+    if (typeof tplOptions.version == 'number') {
+        options.version = tplOptions.version;
+    }
     if (tplOptions.cache) {
         if (tplOptions.cache.name) {
-            options.cache.name = 'tt-sw-cache-' + encodeURIComponent(tplOptions.cache.name);
+            options.cache.name = 'tt-sw-cache-' + encodeURIComponent(tplOptions.cache.name) + '-' + options.version;
         }
         if (tplOptions.cache.method) {
             options.cache.method = tplOptions.cache.method;
@@ -792,43 +973,41 @@ if (tplOptions) {
     if (tplOptions.successResponses instanceof RegExp) {
         options.successResponses = tplOptions.successResponses;
     }
-}*/
+}
 //method, path, handler, options
 /*
-1 --  networkFirst
-2 --  cacheFirst
-3 --  fastest
-4 --  networkOnly
-5 --  cacheOnly
+1 -- 网络优先 networkFirst
+2 -- 缓存优先 cacheFirst
+3 -- 速度优先 fastest
+4 -- 仅网络 networkOnly
+5 -- 仅缓存 cacheOnly
 */
 
-/*var route = new Route(
-    'GET',
-
-    "*.jpg"
-
+    var route = new Route(
+            'GET',
+        
+        "*.jpg"
+        
     ,
-
+    
     function(request, values, options) {
-        return fetch("./sw02.jpg");
-    }
-
+  return fetch("./sw02.jpg");
+}
+        
     ,
     {}
-);
-routes.add(route);
-*/
+    );
+    routes.add(route);
+    
 
 self.addEventListener('install', function(event) {
-	console.log('on install event!');
-    //installListener(event, options);
+    installListener(event, options);
 });
 self.addEventListener('activate', function(event) {
-	console.log('on install event!');
-    //activateListener(event, options);
+    activateListener(event, options);
 });
 self.addEventListener('fetch', function(event) {
-	console.log('on install event!');
-    //fetchListener(event, routes);
+    fetchListener(event, routes);
 });
 /**********************************************************************************/
+

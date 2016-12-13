@@ -1004,10 +1004,10 @@ if (tplOptions) {
     
 
 self.addEventListener('install', function(event) {
-    installListener(event, options);
+    //installListener(event, options);
 });
 self.addEventListener('activate', function(event) {
-    activateListener(event, options);
+    //activateListener(event, options);
 });
 self.addEventListener('fetch', function(event) {
     fetchListener(event, routes);

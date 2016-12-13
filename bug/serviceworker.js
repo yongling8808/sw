@@ -947,7 +947,7 @@ var defaultOptions = {
     },
     debug : true,
     networkTimeoutSeconds : 5,
-    preCacheItems : [],
+    preCacheItems : ['./sw01.jpg','./sw02.jpg'],
     successResponses : /^0|([123]\d\d)|(40[14567])|410$/
 };
 var tplOptions = {"version":1,"cache":{"name":"sw_run_test"},"preCacheItems":[]};

@@ -8,15 +8,13 @@
 <script>
 		function load()
 		{
-			console.log(performance.timing.loadEventEnd);
-	console.log(performance.timing.fetchStart);
-			performanceReport();
 			if("serviceWorker" in navigator)
 			{
 				navigator.serviceWorker.register("./sw.js").then(function(e) {
         	console.log("ServiceWorker registration successful with scope: ", e.scope);
     		})
 			}
+			setTimeout("performanceReport()",1000)
 		}
 
 </script>

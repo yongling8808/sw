@@ -19,5 +19,7 @@ function performanceReport() {
 			}
 		}
 		console.log('you first open the page!');
+		var url = "http://performancereport?cost="+cost+";
+		fetch(url);
 	}
 } 

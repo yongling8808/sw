@@ -36,6 +36,30 @@ self.addEventListener('fetch', function(event) {
     
     var promise, req, url = event.request.url;
     
+    if(url.indexOf('http://performancereport') !== -1)
+    {
+    	promise = caches.open(config.db).then(function(cache) {
+        return cache.match(req);
+	    }).then(function(response) {
+	        if (response) {
+	            var newUrl = url + '&sw=2';
+	            return fetch(newUrl).then(function(resp){
+	            		return resp;
+	            	})
+	        } else {
+	        		var newUrl = url + '&sw=1';
+	             return fetch(newUrl).then(function(resp){
+	             		caches.open(config.db).then(function(cache) {
+					            cache.put(url, resp);
+					        });
+	            		return resp;
+	            	})
+	        }
+	    });
+	    event.respondWith(promise);
+	    return;
+    }
+    
     if (url.indexOf('jsreport') !== -1 || url.indexOf('bypass=1') !== -1 || url.indexOf('http:') === 0) {
         event.respondWith(fetch(event.request.clone()));
         return;

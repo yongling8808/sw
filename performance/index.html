@@ -8,6 +8,8 @@
 <script>
 		function load()
 		{
+			console.log(performance.timing.loadEventEnd);
+	console.log(performance.timing.fetchStart);
 			performanceReport();
 			if("serviceWorker" in navigator)
 			{

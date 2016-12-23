@@ -36,7 +36,12 @@ self.addEventListener('fetch', function(event) {
     
     var promise, req, url = event.request.url;
     
-    if(url.indexOf('http://performancereport') !== -1)
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    //Intercept perfromancereport fetch,check if cache has performancereport response,
+    //if has,add 'sw=2' to the query
+    //not,add 'sw=1' to the query
+    if(url.indexOf('performancereport=1') !== -1)
     {
     	promise = caches.open(config.db).then(function(cache) {
         return cache.match(req);
@@ -59,6 +64,8 @@ self.addEventListener('fetch', function(event) {
 	    event.respondWith(promise);
 	    return;
     }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////
     
     if (url.indexOf('jsreport') !== -1 || url.indexOf('bypass=1') !== -1 || url.indexOf('http:') === 0) {
         event.respondWith(fetch(event.request.clone()));

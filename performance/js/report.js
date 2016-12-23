@@ -8,6 +8,16 @@ function performanceReport() {
 	else
 	{
 		sessionStorage.setItem("reported","true");
+		
+		var resources = performance.getEntriesByType('resource');
+		for(int i=0;i<resources.length;i++)
+		{
+			if(resources[i].duration == 0)
+			{
+				console.log('you have already open this page short before!');
+				return;
+			}
+		}
 		console.log('you first open the page!');
 	}
 } 

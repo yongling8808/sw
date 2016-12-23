@@ -19,7 +19,7 @@ function performanceReport() {
 			}
 		}
 		console.log('you first open the page!');
-		var url = "http://*****************?performancereport=1&cost="+cost+";
+		var url = "http://*****************?performancereport=1&cost="+cost;
 		fetch(url);
 	}
 } 

@@ -8,13 +8,13 @@
 <script>
 		function load()
 		{
+			performanceReport();
 			if("serviceWorker" in navigator)
 			{
 				navigator.serviceWorker.register("./sw.js").then(function(e) {
         	console.log("ServiceWorker registration successful with scope: ", e.scope);
     		})
 			}
-			performanceReport();
 		}
 
 </script>

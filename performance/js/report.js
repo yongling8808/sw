@@ -10,7 +10,7 @@ function performanceReport() {
 		sessionStorage.setItem("reported","true");
 		
 		var resources = performance.getEntriesByType('resource');
-		for(int i=0;i<resources.length;i++)
+		for(var i=0;i<resources.length;i++)
 		{
 			if(resources[i].duration == 0)
 			{

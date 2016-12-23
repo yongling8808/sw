@@ -12,7 +12,7 @@ var OFFLINE_URL = 'offline.html';
 
 
 var CURRENT_CACHES = {
-  prefetch: 'https://yongling8808.github.io/sw/pic_page/'
+  prefetch: 'https://yongling8808.github.io/sw/pic_page/index.html'
 };
 
 self.addEventListener('install', function(event) {
@@ -96,7 +96,7 @@ this.addEventListener('activate', function(event) {
      								+'https://yongling8808.github.io/sw/pic_page/img/13.jpg|'
      								+'https://yongling8808.github.io/sw/pic_page/img/14.jpg|'
      								+'https://yongling8808.github.io/sw/pic_page/img/15.jpg'
-     								+'||fetchMode=3'];
+     								+'||fetchMode=1'];
      	var body = new Blob(preload);
      	return cache.put('https://x5sw.qq.com/config',new Response(body));
    })

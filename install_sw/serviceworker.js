@@ -17,12 +17,12 @@ this.addEventListener('fetch', function(event)  {
     var promise;
     
     promise = caches.open(OFFLINE_CACHE).then(function(cache) {
-        return cache.match(req);
+        return cache.match(event.request);
     }).then(function(response) {
         if (response) {
             return response;
         } else {
-            return addToCache(req);
+            return addToCache(event.request);
         }
     });
     

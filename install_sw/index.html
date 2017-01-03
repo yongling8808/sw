@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+
+<head>
+
+<script>
+
+function register() {
+
+
+  navigator.serviceWorker.register('serviceworker.js').then( function(serviceWorker) {
+
+if(serviceWorker.installing) {
+      console.log('Service worker installing');
+    } else if(serviceWorker.waiting) {
+      console.log('Service worker installed');
+    } else if(serviceWorker.active) {
+      console.log('Service worker active');
+      alert('Install OK!')
+    }
+    console.log(serviceWorker);
+
+// To use the serviceWorker immediately,
+
+// you might call window.location.reload()
+ 
+});
+}
+
+</script>
+<script src="app.js" type="text/javascript"></script>
+</head>
+
+<body onload="register()">
+<h1>ServiceWork Install!</h1>
+</body>
+
+</html>

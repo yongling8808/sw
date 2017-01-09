@@ -98,7 +98,7 @@ this.addEventListener('activate', function(event) {
      								+'https://yongling8808.github.io/sw/pic_page/img/15.jpg'
      								+'||fetchMode=1'];
      	var body = new Blob(preload);
-     	return cache.put('https://x5sw.qq.com/config',new Response(body));
+     	return cache.put('https://x5swopt.qq.com/config',new Response(body));
    })
    );
 });

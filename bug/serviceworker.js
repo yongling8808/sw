@@ -903,14 +903,14 @@ Routes.prototype.matchMethod = function(method, url) {
 //
 function fetchListener(event, routes) {
 	console.log('fetchListener');
-    var handler = routes.match(event.request);
+    /*var handler = routes.match(event.request);
     if (handler) {
     	console.log('fetchListener-inhandler');
         event.respondWith(handler(event.request));
     } else {
-    	console.log('fetchListener-nothandler');
+    	console.log('fetchListener-nothandler');*/
         event.respondWith(fetch(event.request))
-    }
+    //}
 }
 
 function activateListener(event, options) {

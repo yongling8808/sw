@@ -596,6 +596,7 @@ webpackJsonp([11], {
                 disabled: function () {
                     return this.count || !this.enabled
                 }, buttonText: function () {
+                		console.log(this.count);
                     return "number" == typeof this.count ? this.count ? "已发送(" + this.count + "s)" : "重新获取" : "获取验证码"
                 }
             }, methods: {
@@ -603,7 +604,8 @@ webpackJsonp([11], {
                     var e = this, t = function () {
                         if (e.count--, e.count <= 0)return clearInterval(e.interval)
                     };
-                    this.count = n, this.interval = setInterval(t, 1e3)
+                    this.count = n, 
+                    this.interval = setInterval(t, 1e3)
                 }
             }
         }

@@ -12,12 +12,12 @@ this.addEventListener('install', function(event) {
   var urlsToPrefetch = [
     './images/banner.png',
     './css/main.css',
-    './js/main.js',
+    './js/main.jsfs',
   ];
 
   event.waitUntil(
     caches.open(OFFLINE_CACHE_NAME).then(function(cache) {
-      cache.addAll(urlsToPrefetch)
+      cache.addAll(urlsToPrefetch);
       return cache.addAll(vipUrlsToPrefetch);
     })
   );      

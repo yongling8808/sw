@@ -12,7 +12,7 @@ this.addEventListener('install', function(event) {
   var urlsToPrefetch = [
     './images/banner.png',
     './css/main.css',
-    './js/main.jsfs',
+    './js/main.js',
   ];
 
   event.waitUntil(

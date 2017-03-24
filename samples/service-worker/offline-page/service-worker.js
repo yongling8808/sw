@@ -36,13 +36,13 @@ this.addEventListener('activate', function(event) {
 this.addEventListener('fetch', function(event)  {
   event.respondWith(
     caches.open(OFFLINE_CACHE_NAME).then(function(cache) {
-      cache.match(event.request.url).then(function(response){
-        //response为空表明未匹配成功，交由fetch方法去网络拉取
-        if(response) {
-          return response;
-        }
-        return fetch(event.request);
-      });
-    })
+      return cache.match(event.request.url);
+    }).then(function(response){
+      //response为空表明未匹配成功，交由fetch方法去网络拉取
+      if(response) {
+        return response;
+      }
+      return fetch(event.request);
+    });
   ); 
-}); 
+});

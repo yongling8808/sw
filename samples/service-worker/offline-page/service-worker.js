@@ -1,6 +1,6 @@
 //cachestorage名称，可以加上版本号予以区分
 const OFFLINE_CACHE_PREFIX = 'offline_page_';
-const CACHE_VERSION = 'v1.1';
+const CACHE_VERSION = 'v1.0';
 const OFFLINE_CACHE_NAME = OFFLINE_CACHE_PREFIX + CACHE_VERSION;
 
 //Service Worker安装事件，其中可以预缓存资源

@@ -53,6 +53,7 @@ this.addEventListener('fetch', function(event)  {
       }).then(function(response) {
         if(response)
           return response;
+        return fetch(event.request);
       }),
       fetch(event.request)
     ])

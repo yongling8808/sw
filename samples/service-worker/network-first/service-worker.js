@@ -40,7 +40,7 @@ this.addEventListener('activate', function(event) {
 this.addEventListener('fetch', function(event)  {
   event.respondWith(
     fetch(event.request).catch(function() {
-      caches.open(OFFLINE_CACHE_NAME).then(function(cache) {
+      return caches.open(OFFLINE_CACHE_NAME).then(function(cache) {
         return cache.match(event.request.url);
       });
     })

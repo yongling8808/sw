@@ -50,6 +50,9 @@ this.addEventListener('fetch', function(event)  {
     promiseAny([
       caches.open(OFFLINE_CACHE_NAME).then(function(cache) {
         return cache.match(event.request.url);
+      }).then(function(response) {
+        if(response)
+          return response;
       }),
       fetch(event.request)
     ])

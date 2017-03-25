@@ -1,5 +1,7 @@
 //cachestorage名称，可以加上版本号予以区分
-const OFFLINE_CACHE_NAME = 'cache_name_v1.0';
+const OFFLINE_CACHE_PREFIX = 'offline_page_';
+const CACHE_VERSION = 'v1.0';
+const OFFLINE_CACHE_NAME = OFFLINE_CACHE_PREFIX + CACHE_VERSION;
 
 //Service Worker安装事件，其中可以预缓存资源
 this.addEventListener('install', function(event) {
@@ -25,7 +27,9 @@ this.addEventListener('activate', function(event) {
   event.waitUntil(caches.keys().then(function(cacheNames) {
     return Promise.all(cacheNames.map(function(cacheName) {
         if (cacheName !== OFFLINE_CACHE_NAME) {
+          if(cacheName.indexOf(OFFLINE_CACHE_PREFIX) != -1) {
             return caches.delete(cacheName);
+          }
         }
     }));
   }));

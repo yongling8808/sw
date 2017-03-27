@@ -36,12 +36,12 @@ var addToCache = function(req) {
 this.addEventListener('fetch', function(event)  {
   event.respondWith(
      caches.open(OFFLINE_CACHE_NAME).then(function(cache) {
-          return cache.match(req);
+          return cache.match(event.request);
       }).then(function(response) {
         if (response) {
             return response;
         } else {
-            return addToCache(req);
+            return addToCache(event.request);
         }
     })
   ); 

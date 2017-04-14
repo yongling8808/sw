@@ -1,4 +1,4 @@
 
 function button_click() {
-	alert("Welcom!");
+	alert("Welcome!");
 }

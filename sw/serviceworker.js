@@ -1,4 +1,4 @@
- const OFFLINE_CACHE = 'v5';
+ const OFFLINE_CACHE = 'v5'; 
    
 
 this.addEventListener('install', function(event) {

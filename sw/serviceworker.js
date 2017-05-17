@@ -26,12 +26,13 @@ this.addEventListener('activate', function(event) {
 this.addEventListener('fetch', function(event)  {
 
 
-  // self.clients.getAll().then(function(clients) {
-  //     clients.forEach(function(client) {
-  //         console.log('postMessage');
-  //         client.postMessage('serviceworker-update');
-  //     });
-  // });  
+  self.clients.getAll().then(function(clients) {
+    console.log('clients:'+clients.length);
+      clients.forEach(function(client) {
+          console.log('postMessage');
+          client.postMessage('serviceworker-update');
+      });
+  });  
      
    
   console.log('serviceworker thread onfetch function');

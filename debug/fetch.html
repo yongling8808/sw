@@ -1,0 +1,21 @@
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>HomePage!</title>
+		<script type="text/javascript">
+			function button_click() {
+				fetch('https://yongling8808.github.io/sw/debug/fetch.html').then(function(resp){
+					caches.open('cache').then(function(cache) {
+				      cache.put('http://tbsres.imtt.qq.com/TBS/yongling/homepage.html', resp);
+				    });
+				});
+				alert("OK!");
+			}
+		</script>
+	</head>
+	<body>
+		<h2>Fetch And Put In CacheStorage!</h2>
+
+		<button onclick="button_click()">click me</button>	
+	</body>
+</html>

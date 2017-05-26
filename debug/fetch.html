@@ -4,7 +4,7 @@
 	<title>HomePage!</title>
 		<script type="text/javascript">
 			function button_click() {
-				fetch('https://yongling8808.github.io/sw/debug/fetch.html').then(function(resp){
+				fetch('http://yongling8808.github.io/sw/debug/fetch.html').then(function(resp){
 					caches.open('cache').then(function(cache) {
 				      cache.put('http://tbsres.imtt.qq.com/TBS/yongling/homepage.html', resp);
 				    });

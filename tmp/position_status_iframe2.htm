@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta  name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no" />
+  <title>JS Bin1</title>
+</head>
+<body>
+<button onclick="location.reload()">refresh page</button>
+<button onclick="getStatus()">get status</button>
+<br><br>
+<!--<p>test1</p> -->
+<button onclick="getPos()">gps Position</button>
+<button onclick="watchPos()">watch gps Position</button>
+<button onclick="stopWatch()">stopWatch</button>
+<br><br>
+<button onclick="getPosNet()">net Position</button>
+<button onclick="watchPosNet()">watch net Position</button>
+<button onclick="stopWatch()">stopWatch</button><br><br>
+----------------------------------------
+<p id="getCurrentPosition_latitude"></p> 
+<p id="getCurrentPosition_longitude"></p> 
+<p id="getCurrentPosition_accuracy"></p> 
+<p id="getCurrentPosition_altitude"></p> 
+<p id="getCurrentPosition_heading"></p> 
+<p id="getCurrentPosition_speed"></p> 
+----------------------------------------
+<p id="watchPosition_latitude"></p> 
+<p id="watchPosition_longitude"></p> 
+<p id="watchPosition_accuracy"></p> 
+<p id="watchPosition_altitude"></p> 
+<p id="watchPosition_heading"></p> 
+<p id="watchPosition_speed"></p> 
+<script type="text/javascript">
+	function getStatus() {
+		if (navigator.geolocation.getAuthorizedStatus) {
+			var result = navigator.geolocation.getAuthorizedStatus();
+			if (1 == result) {
+				alert("未授权");
+			} else if (2 == result) {
+				alert("未持久化");
+			} else if (3 == result) {
+				alert("已允许");
+			} else if (4 == result) {
+			  alert("已拒绝");
+			} else {
+				alert("未知错误");
+			}
+		} else {
+			alert("不支持该调用");
+		}
+	}
+	var getCurrentPosition_num = 0;
+	function getPos(){
+		//alert(1);
+		// One-shot position request.
+		//para={enableHighAccuracy:true,timeout:5000,maximumAge:20000,enableGps:false};
+		//para={enableGps:false,maximumAge:600000,timeout:0};
+		//alert(1);
+		navigator.geolocation.getCurrentPosition(showMap,getPosError);
+		//alert(2);
+	}
+		function getPosNet(){
+		//alert(1);
+		// One-shot position request.
+		//para={enableHighAccuracy:true,timeout:5000,maximumAge:20000,enableGps:false};
+		para={enableGps:false};
+    navigator.geolocation.getCurrentPosition(showMap,getPosError,para);
+	}
+	function showMap(position) {
+      	 document.getElementById("getCurrentPosition_latitude").innerHTML = "latitude("+getCurrentPosition_num+")"+position.coords.latitude; 
+			 	 document.getElementById("getCurrentPosition_longitude").innerHTML = "longitude("+getCurrentPosition_num+")"+position.coords.longitude; 
+	 			 document.getElementById("getCurrentPosition_accuracy").innerHTML = "accuracy("+getCurrentPosition_num+")"+position.coords.accuracy; 
+	 	 		 document.getElementById("getCurrentPosition_altitude").innerHTML = "altitude("+getCurrentPosition_num+")"+position.coords.altitude; 
+	 	 		 document.getElementById("getCurrentPosition_heading").innerHTML = "heading("+getCurrentPosition_num+")"+position.coords.heading; 
+	 	 		 document.getElementById("getCurrentPosition_speed").innerHTML = "speed("+getCurrentPosition_num+")"+position.coords.speed; 
+	  	 	 getCurrentPosition_num = getCurrentPosition_num+1;
+    }
+    function getPosError(error) {
+		//alert("getPosError:"+error.code+","+navigator.geolocation);
+		//alert(9);
+		a = 0;
+		switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    a = 1;
+                    alert("请求被拒绝");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    a = 2;
+                    alert("位置信息不可用");
+                    break;
+                case error.TIMEOUT:
+                    a = 3;
+                    alert("请求超时");
+                    break;
+                default:
+                    a =4;
+                    alert("未知异常"); 
+                    break
+            }
+  	}
+    
+    var watchPosition_num = 0;
+    var watchID = 0;
+	function watchPos()  {
+		  //para={enableGps:false};
+		  var oldWatchID = watchID;
+			
+		if(oldWatchID > 0){
+				navigator.geolocation.clearWatch(oldWatchID);
+			}
+			
+			watchID = navigator.geolocation.watchPosition(watchPosition,watchPositionError);
+	}
+	function watchPosNet()  {
+		  para={enableGps:false};
+		  var oldWatchID = watchID;
+			
+    	if(oldWatchID > 0){
+				navigator.geolocation.clearWatch(oldWatchID);
+			}
+			watchID = navigator.geolocation.watchPosition(watchPosition,watchPositionError,para);
+	}
+	function watchPosition(position) {
+				 document.getElementById("watchPosition_latitude").innerHTML = "latitude("+watchPosition_num+")"+position.coords.latitude; 
+			 	 document.getElementById("watchPosition_longitude").innerHTML = "longitude("+watchPosition_num+")"+position.coords.longitude; 
+	 			 document.getElementById("watchPosition_accuracy").innerHTML = "accuracy("+watchPosition_num+")"+position.coords.accuracy; 
+	 	 		 document.getElementById("watchPosition_altitude").innerHTML = "altitude("+watchPosition_num+")"+position.coords.altitude; 
+	 	 		 document.getElementById("watchPosition_heading").innerHTML = "heading("+watchPosition_num+")"+position.coords.heading; 
+	 	 		 document.getElementById("watchPosition_speed").innerHTML = "speed("+watchPosition_num+")"+position.coords.speed; 
+	 			 watchPosition_num = watchPosition_num +1;
+  	}
+  	function watchPositionError(error) {
+			alert("watchPositionError");
+  	}
+  	function stopWatch() {
+			navigator.geolocation.clearWatch(watchID);
+  	}
+
+    
+</script>
+下面是嵌套网页：
+<iframe src="https://res.imtt.qq.com/qqbrowser_x5/zhengyuli/position_status.htm" style="width:100%;height:400px"></iframe>
+</body>
+</html>

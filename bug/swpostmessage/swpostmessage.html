@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Service Worker Post Message</title>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js"})
+            .then(function () {
+                var worker = navigator.serviceWorker.controller;
+                worker.postMessage({ name: "hello" });
+            });
+
+            navigator.serviceWorker.addEventListener("message", function (event) {
+                var name = event.data.name;
+                var user = event.data.user;
+
+                if (name === "hello") {
+                    document.title = (name + " " + user);
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+  <a>本测试用例用于验证TBS3.3 SW postmessage不能用的bug</a>
+  <a>SW 注册完毕后会先向SW线程发送 hello 字串，SW线程接收到后会返回hello world 字串，并替换到当前title</a>
+</body>
+
+</html>

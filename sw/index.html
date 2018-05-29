@@ -29,7 +29,7 @@ if(serviceWorker.installing) {
 
 window.addEventListener('message', function(event) {
   console.log('Received message:'+event.data);
-  alert("Received message!");
+  alert("Received message!"+event.data);
 	if(event.data == "serviceworker-update")
 	{
 		alert("page have updated!");
@@ -39,7 +39,7 @@ window.addEventListener('message', function(event) {
 
 navigator.serviceWorker.addEventListener('message', function(event) {
   console.log('Received message1:'+event.data);
-  alert("Received message1!");
+  alert("Received message1!"+event.data);
   if(event.data == "serviceworker-update")
   {
     alert("page have updated1!");
